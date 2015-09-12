@@ -37,3 +37,11 @@ F:\radar2\RadarSystem\radarsystem\radarsystem\bin\Debug\radarsystem.pdb
 F:\radar2\RadarSystem\radarsystem\radarsystem\obj\Debug\radarsystem.Form1.resources
 F:\radar2\RadarSystem\radarsystem\radarsystem\obj\Debug\radarsystem.Properties.Resources.resources
 F:\radar2\RadarSystem\radarsystem\radarsystem\obj\Debug\radarsystem.csproj.GenerateResource.Cache
+E:\GitHubReposit\RadarSimulation\radarsystem\radarsystem\obj\Debug\radarsystem.exe
+E:\GitHubReposit\RadarSimulation\radarsystem\radarsystem\obj\Debug\radarsystem.pdb
+E:\GitHubReposit\RadarSimulation\radarsystem\radarsystem\bin\Debug\radarsystem.exe
+E:\GitHubReposit\RadarSimulation\radarsystem\radarsystem\bin\Debug\radarsystem.pdb
+E:\GitHubReposit\RadarSimulation\radarsystem\radarsystem\obj\Debug\radarsystem.csprojResolveAssemblyReference.cache
+E:\GitHubReposit\RadarSimulation\radarsystem\radarsystem\obj\Debug\radarsystem.Form1.resources
+E:\GitHubReposit\RadarSimulation\radarsystem\radarsystem\obj\Debug\radarsystem.Properties.Resources.resources
+E:\GitHubReposit\RadarSimulation\radarsystem\radarsystem\obj\Debug\radarsystem.csproj.GenerateResource.Cache

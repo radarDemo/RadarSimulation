@@ -1,0 +1,53 @@
+!table
+!version 300
+!charset WindowsLatin1
+
+Definition Table
+  File "wdc-3m.sid"
+  Type "RASTER"
+  (317847.69,4315885.7400000002) (0,0) Label "Pt 1",
+  (318147.69,4315885.7400000002) (100,0) Label "Pt 2",
+  (317847.69,4315585.7400000002) (0,100) Label "Pt 3"
+  CoordSys Earth Projection 8, 33, "m", -75, 0, 0.9996, 500000, 0
+  Units "m"
+ReadOnly
+begin_metadata
+"\IsReadOnly" = "FALSE"
+"\Quality" = ""
+"\Quality\Lineage" = ""
+"\Quality\Lineage\Source" = ""
+"\Quality\Lineage\Source\Vintage" = "2002"
+"\Quality\Lineage\Source\Citation" = "ImagePro"
+"\Spatial Reference" = ""
+"\Spatial Reference\Geographic" = ""
+"\Spatial Reference\Geographic\Projection" = ""
+"\Spatial Reference\Geographic\Projection\Name" = "UTM Zone 18 (NAD 83)"
+"\Spatial Reference\Geographic\Projection\Clause" = "CoordSys Earth Projection 8, 33, ""m"", -75, 0, 0.9996, 500000, 0 Bounds (-2999682152.31, -2995684114.26) (3000317847.69, 3004315885.74)"
+"\Spatial Reference\Geographic\Coordinate Units" = "m"
+"\Identification" = ""
+"\Identification\Description" = ""
+"\Identification\Description\Abstract" = "DC ImagePro 3 meter"
+"\Identification\Use Constraints" = "For Use with MapInfo Professional"
+"\Identification\Access Constraints" = "Licensed Users"
+"\Identification\Domain" = ""
+"\Identification\Domain\Bounds" = ""
+"\Identification\Domain\Bounds\minx" = "-77.1"
+"\Identification\Domain\Bounds\maxx" = "-77"
+"\Identification\Domain\Bounds\maxy" = "38.97"
+"\Identification\Domain\Bounds\miny" = "38.9"
+"\Identification\Citation" = "MapInfo Professional Bundled Data"
+"\Identification\Time Period" = ""
+"\Identification\Time Period\Currentness" = "2002"
+"\Spatial Organization" = ""
+"\Spatial Organization\Object" = ""
+"\Spatial Organization\Object\Type1" = "Regions"
+"\Spatial Organization\Object\Type1\Count" = "0"
+"\Spatial Organization\Object\Type2" = "Points"
+"\Spatial Organization\Object\Type2\Count" = "0"
+"\Spatial Organization\Object\Type3" = "Polylines"
+"\Spatial Organization\Object\Type3\Count" = "0"
+"\Spatial Organization\Object\Type4" = "Lines"
+"\Spatial Organization\Object\Type4\Count" = "0"
+"\Spatial Organization\Object\All" = "Sum of all objects"
+"\Spatial Organization\Object\All\Count" = "0"
+end_metadata

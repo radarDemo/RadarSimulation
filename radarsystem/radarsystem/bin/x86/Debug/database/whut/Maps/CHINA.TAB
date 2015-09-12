@@ -1,0 +1,11 @@
+!table
+!version 300
+!charset WindowsLatin1
+
+Definition Table
+  Description "China"
+  Type NATIVE Charset "WindowsLatin1"
+  Fields 3
+    Country Char (30) Index 1 ;
+    Capital Char (30) ;
+    Continent Char (20) ;

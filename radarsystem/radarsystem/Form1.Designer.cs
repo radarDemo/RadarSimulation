@@ -30,23 +30,21 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tbp_SceneSet = new System.Windows.Forms.TabPage();
-            this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.button_goback = new System.Windows.Forms.Button();
             this.textBox_doppler = new System.Windows.Forms.TextBox();
             this.label_state = new System.Windows.Forms.Label();
             this.checkedListBox_radartype = new System.Windows.Forms.CheckedListBox();
             this.label_sel_radartype = new System.Windows.Forms.Label();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.tbp_SetModule = new System.Windows.Forms.TabPage();
             this.btn_Finish = new System.Windows.Forms.Button();
             this.clb_setMod = new System.Windows.Forms.CheckedListBox();
             this.label_addNoiseType = new System.Windows.Forms.Label();
             this.cob_setModules = new System.Windows.Forms.ComboBox();
             this.tbp_CharacterAnalysis = new System.Windows.Forms.TabPage();
+            this.Ypanel = new System.Windows.Forms.Panel();
+            this.Xpanel = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.featurelistView = new System.Windows.Forms.ListView();
@@ -55,32 +53,19 @@
             this.label1 = new System.Windows.Forms.Label();
             this.featurecomboBox1 = new System.Windows.Forms.ComboBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tabControl1.SuspendLayout();
             this.tbp_SceneSet.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.tbp_SetModule.SuspendLayout();
             this.tbp_CharacterAnalysis.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Location = new System.Drawing.Point(276, 23);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(27, 8);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(-2, 0);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(778, 56);
-            this.pictureBox2.TabIndex = 1;
-            this.pictureBox2.TabStop = false;
             // 
             // tabControl1
             // 
@@ -110,21 +95,6 @@
             this.tbp_SceneSet.TabIndex = 0;
             this.tbp_SceneSet.Text = "岸基场景设置";
             this.tbp_SceneSet.UseVisualStyleBackColor = true;
-            // 
-            // pictureBox4
-            // 
-            this.pictureBox4.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox4.Image")));
-            this.pictureBox4.Location = new System.Drawing.Point(35, 147);
-            this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(58, 56);
-            this.pictureBox4.TabIndex = 6;
-            this.pictureBox4.TabStop = false;
-            this.pictureBox4.DragDrop += new System.Windows.Forms.DragEventHandler(this.OnDargDrop);
-            this.pictureBox4.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OnMouseDown);
-            this.pictureBox4.MouseMove += new System.Windows.Forms.MouseEventHandler(this.OnMouseMove);
-            this.pictureBox4.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp);
             // 
             // button_goback
             // 
@@ -177,15 +147,6 @@
             this.label_sel_radartype.Size = new System.Drawing.Size(77, 12);
             this.label_sel_radartype.TabIndex = 1;
             this.label_sel_radartype.Text = "雷达类型选择";
-            // 
-            // pictureBox3
-            // 
-            this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
-            this.pictureBox3.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(637, 479);
-            this.pictureBox3.TabIndex = 0;
-            this.pictureBox3.TabStop = false;
             // 
             // tbp_SetModule
             // 
@@ -251,6 +212,8 @@
             // 
             // tbp_CharacterAnalysis
             // 
+            this.tbp_CharacterAnalysis.Controls.Add(this.Ypanel);
+            this.tbp_CharacterAnalysis.Controls.Add(this.Xpanel);
             this.tbp_CharacterAnalysis.Controls.Add(this.panel2);
             this.tbp_CharacterAnalysis.Controls.Add(this.panel1);
             this.tbp_CharacterAnalysis.Controls.Add(this.featurelistView);
@@ -262,6 +225,22 @@
             this.tbp_CharacterAnalysis.TabIndex = 2;
             this.tbp_CharacterAnalysis.Text = "特性分析";
             this.tbp_CharacterAnalysis.UseVisualStyleBackColor = true;
+            // 
+            // Ypanel
+            // 
+            this.Ypanel.Location = new System.Drawing.Point(24, 23);
+            this.Ypanel.Name = "Ypanel";
+            this.Ypanel.Size = new System.Drawing.Size(41, 442);
+            this.Ypanel.TabIndex = 7;
+            this.Ypanel.Paint += new System.Windows.Forms.PaintEventHandler(this.Ypanel_Paint);
+            // 
+            // Xpanel
+            // 
+            this.Xpanel.Location = new System.Drawing.Point(71, 7);
+            this.Xpanel.Name = "Xpanel";
+            this.Xpanel.Size = new System.Drawing.Size(502, 15);
+            this.Xpanel.TabIndex = 6;
+            this.Xpanel.Paint += new System.Windows.Forms.PaintEventHandler(this.Xpanel_Paint);
             // 
             // panel2
             // 
@@ -275,9 +254,9 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.LightGreen;
-            this.panel1.Location = new System.Drawing.Point(71, 15);
+            this.panel1.Location = new System.Drawing.Point(71, 23);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(504, 454);
+            this.panel1.Size = new System.Drawing.Size(502, 442);
             this.panel1.TabIndex = 4;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
@@ -319,28 +298,72 @@
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // pictureBox4
+            // 
+            this.pictureBox4.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.pictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox4.Image")));
+            this.pictureBox4.Location = new System.Drawing.Point(68, 155);
+            this.pictureBox4.Name = "pictureBox4";
+            this.pictureBox4.Size = new System.Drawing.Size(58, 56);
+            this.pictureBox4.TabIndex = 6;
+            this.pictureBox4.TabStop = false;
+            this.pictureBox4.DragDrop += new System.Windows.Forms.DragEventHandler(this.OnDargDrop);
+            this.pictureBox4.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OnMouseDown);
+            this.pictureBox4.MouseMove += new System.Windows.Forms.MouseEventHandler(this.OnMouseMove);
+            this.pictureBox4.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp);
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.pictureBox3.Image = global::radarsystem.Properties.Resources.pictureBox;
+            this.pictureBox3.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(637, 479);
+            this.pictureBox3.TabIndex = 0;
+            this.pictureBox3.TabStop = false;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.BackgroundImage = global::radarsystem.Properties.Resources.header;
+            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox2.Location = new System.Drawing.Point(-2, 0);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(778, 56);
+            this.pictureBox2.TabIndex = 1;
+            this.pictureBox2.TabStop = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Location = new System.Drawing.Point(276, 23);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(27, 8);
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(778, 565);
+            this.ClientSize = new System.Drawing.Size(778, 573);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.pictureBox1);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            this.SizeChanged += new System.EventHandler(this.Form1_SizeChanged);
             this.tabControl1.ResumeLayout(false);
             this.tbp_SceneSet.ResumeLayout(false);
             this.tbp_SceneSet.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             this.tbp_SetModule.ResumeLayout(false);
             this.tbp_SetModule.PerformLayout();
             this.tbp_CharacterAnalysis.ResumeLayout(false);
             this.tbp_CharacterAnalysis.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -373,6 +396,8 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel Xpanel;
+        private System.Windows.Forms.Panel Ypanel;
     }
 }
 

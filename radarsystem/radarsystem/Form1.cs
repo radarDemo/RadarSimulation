@@ -13,6 +13,9 @@ namespace radarsystem
 {
     public partial class Form1 : Form
     {
+        //自适应窗口类
+        AutoSizeFormClass autoForm = new AutoSizeFormClass();
+
         List<PointD> list = new List<PointD>();
         List<Point> list_trace = new List<Point>();
         Point screenpoint_pic4;
@@ -39,10 +42,11 @@ namespace radarsystem
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            autoForm.controllInitializeSize(this);
             //MessageBox.Show("ha");
             string ConStr = string.Format(@"Provider=Microsoft.Jet.OLEDB.4.0;
-                            Data source='C:\Users\Administrator\Desktop\地图与数据库文件\whut\RecognitionAid.mdb'",
-                Application.StartupPath);
+                            Data source="+Application.StartupPath+"\\database\\whut\\RecognitionAid.mdb");
+            //MessageBox.Show(ConStr);
             OleDbConnection oleCon = new OleDbConnection(ConStr);
             OleDbDataAdapter oleDap = new OleDbDataAdapter("select * from TargetTrailPoints", oleCon);
             DataSet ds = new DataSet();
@@ -591,6 +595,35 @@ namespace radarsystem
             //Control ctrl=tabControl1.GetControl(2);
             if (tabControl1.SelectedIndex == 2)
                 draw_monitor_trace();
+        }
+
+        private void Form1_SizeChanged(object sender, EventArgs e)
+        {
+            autoForm.controlAutoSize(this);
+        }
+
+        private void Xpanel_Paint(object sender, PaintEventArgs e)
+        {
+            Graphics g = Xpanel.CreateGraphics();
+            double start = -1;
+            int sLoc = 0;
+            int addition = 40;
+            for (int i = 0; i < 11; i++)
+            {
+                g.DrawString((start + 0.2 * i).ToString(), new Font(FontFamily.GenericMonospace, 10f), Brushes.Black, new PointF(sLoc + addition * i, 0));
+            }
+        }
+
+        private void Ypanel_Paint(object sender, PaintEventArgs e)
+        {
+            Graphics g = Ypanel.CreateGraphics();
+            double start = 1;
+            int sLoc = 0;
+            int addition = 40;
+            for (int i = 0; i < 11; i++)
+            {
+                g.DrawString((start - 0.2 * i).ToString(), new Font(FontFamily.GenericMonospace, 10f), Brushes.Black, new PointF(0, sLoc + addition * i));
+            }
         }
 
     
