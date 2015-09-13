@@ -157,7 +157,7 @@ namespace radarsystem
                 two = list_trace[i + 1];
                 g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
                 g.DrawLine(p, one, two);
-                System.Threading.Thread.Sleep(500);
+                System.Threading.Thread.Sleep(200);
             }
             //for(int pos=0;pos<list.Count;pos++)
             //{
@@ -259,7 +259,7 @@ namespace radarsystem
                 two.Y = list_trace[i + 1].Y - pictureBox4.Top + cir_Point.Y;
                 g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
                 g.DrawLine(p, one, two);
-                System.Threading.Thread.Sleep(500);
+                System.Threading.Thread.Sleep(400);
             }
         }
         private void checkedListBox_radartype_SelectedIndexChanged(object sender, EventArgs e)
@@ -271,6 +271,8 @@ namespace radarsystem
                 textBox_doppler.Visible=true;
                 textBox_doppler.Text="检测范围\r\n\r\n距离精度\r\n\r\n目标速度\r\n\r\n速度精度";
                 button_goback.Visible = true;
+                //pictureBox4.Image = Bitmap.FromFile(AppDomain.CurrentDomain.BaseDirectory + "\..\\..\\..\\radarsystem\\Resources\\多普勒雷达.jpg");
+                pictureBox4.BackgroundImage = global::radarsystem.Properties.Resources.duopule;
                 pictureBox4.Visible = true;
                 drawtrace();
             //    draw_monitor_trace();
@@ -624,6 +626,20 @@ namespace radarsystem
             {
                 g.DrawString((start - 0.2 * i).ToString(), new Font(FontFamily.GenericMonospace, 10f), Brushes.Black, new PointF(0, sLoc + addition * i));
             }
+        }
+
+        private void checkedListBox_radartype_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            if (checkedListBox_radartype.CheckedItems.Count > 0)
+            {
+                for (int i = 0; i < checkedListBox_radartype.Items.Count; i++)
+                {
+                    if (i != e.Index)
+                    {
+                        this.checkedListBox_radartype.SetItemCheckState(i, System.Windows.Forms.CheckState.Unchecked);
+                    }
+                }
+            }  
         }
 
     

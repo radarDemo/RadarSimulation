@@ -32,11 +32,13 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tbp_SceneSet = new System.Windows.Forms.TabPage();
+            this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.button_goback = new System.Windows.Forms.Button();
             this.textBox_doppler = new System.Windows.Forms.TextBox();
             this.label_state = new System.Windows.Forms.Label();
             this.checkedListBox_radartype = new System.Windows.Forms.CheckedListBox();
             this.label_sel_radartype = new System.Windows.Forms.Label();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.tbp_SetModule = new System.Windows.Forms.TabPage();
             this.btn_Finish = new System.Windows.Forms.Button();
             this.clb_setMod = new System.Windows.Forms.CheckedListBox();
@@ -53,16 +55,14 @@
             this.label1 = new System.Windows.Forms.Label();
             this.featurecomboBox1 = new System.Windows.Forms.ComboBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.pictureBox4 = new System.Windows.Forms.PictureBox();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tabControl1.SuspendLayout();
             this.tbp_SceneSet.SuspendLayout();
-            this.tbp_SetModule.SuspendLayout();
-            this.tbp_CharacterAnalysis.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            this.tbp_SetModule.SuspendLayout();
+            this.tbp_CharacterAnalysis.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -96,6 +96,22 @@
             this.tbp_SceneSet.Text = "岸基场景设置";
             this.tbp_SceneSet.UseVisualStyleBackColor = true;
             // 
+            // pictureBox4
+            // 
+            this.pictureBox4.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            //this.pictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox4.Image")));
+            this.pictureBox4.BackgroundImage = global::radarsystem.Properties.Resources.radarpic;
+            this.pictureBox4.Location = new System.Drawing.Point(68, 175);
+            this.pictureBox4.Name = "pictureBox4";
+            this.pictureBox4.Size = new System.Drawing.Size(58, 56);
+            this.pictureBox4.TabIndex = 6;
+            this.pictureBox4.TabStop = false;
+            this.pictureBox4.DragDrop += new System.Windows.Forms.DragEventHandler(this.OnDargDrop);
+            this.pictureBox4.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OnMouseDown);
+            this.pictureBox4.MouseMove += new System.Windows.Forms.MouseEventHandler(this.OnMouseMove);
+            this.pictureBox4.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp);
+            // 
             // button_goback
             // 
             this.button_goback.Location = new System.Drawing.Point(645, 208);
@@ -109,10 +125,10 @@
             // textBox_doppler
             // 
             this.textBox_doppler.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox_doppler.Location = new System.Drawing.Point(645, 77);
+            this.textBox_doppler.Location = new System.Drawing.Point(643, 77);
             this.textBox_doppler.Multiline = true;
             this.textBox_doppler.Name = "textBox_doppler";
-            this.textBox_doppler.Size = new System.Drawing.Size(120, 94);
+            this.textBox_doppler.Size = new System.Drawing.Size(120, 96);
             this.textBox_doppler.TabIndex = 4;
             // 
             // label_state
@@ -126,17 +142,21 @@
             // 
             // checkedListBox_radartype
             // 
+            this.checkedListBox_radartype.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.checkedListBox_radartype.CheckOnClick = true;
             this.checkedListBox_radartype.FormattingEnabled = true;
             this.checkedListBox_radartype.Items.AddRange(new object[] {
             "多普勒雷达",
             "多基地雷达",
             "超视距雷达",
-            "声呐雷达"});
+            "声呐雷达",
+            "电子对抗",
+            "指挥控制"});
             this.checkedListBox_radartype.Location = new System.Drawing.Point(645, 77);
             this.checkedListBox_radartype.Name = "checkedListBox_radartype";
-            this.checkedListBox_radartype.Size = new System.Drawing.Size(120, 84);
+            this.checkedListBox_radartype.Size = new System.Drawing.Size(120, 96);
             this.checkedListBox_radartype.TabIndex = 2;
+            this.checkedListBox_radartype.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBox_radartype_ItemCheck);
             this.checkedListBox_radartype.SelectedIndexChanged += new System.EventHandler(this.checkedListBox_radartype_SelectedIndexChanged);
             // 
             // label_sel_radartype
@@ -144,9 +164,19 @@
             this.label_sel_radartype.AutoSize = true;
             this.label_sel_radartype.Location = new System.Drawing.Point(643, 38);
             this.label_sel_radartype.Name = "label_sel_radartype";
-            this.label_sel_radartype.Size = new System.Drawing.Size(77, 12);
+            this.label_sel_radartype.Size = new System.Drawing.Size(89, 12);
             this.label_sel_radartype.TabIndex = 1;
-            this.label_sel_radartype.Text = "雷达类型选择";
+            this.label_sel_radartype.Text = "雷达类型选择：";
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.pictureBox3.Image = global::radarsystem.Properties.Resources.pictureBox;
+            this.pictureBox3.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(637, 479);
+            this.pictureBox3.TabIndex = 0;
+            this.pictureBox3.TabStop = false;
             // 
             // tbp_SetModule
             // 
@@ -298,31 +328,6 @@
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // pictureBox4
-            // 
-            this.pictureBox4.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox4.Image")));
-            this.pictureBox4.Location = new System.Drawing.Point(68, 155);
-            this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(58, 56);
-            this.pictureBox4.TabIndex = 6;
-            this.pictureBox4.TabStop = false;
-            this.pictureBox4.DragDrop += new System.Windows.Forms.DragEventHandler(this.OnDargDrop);
-            this.pictureBox4.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OnMouseDown);
-            this.pictureBox4.MouseMove += new System.Windows.Forms.MouseEventHandler(this.OnMouseMove);
-            this.pictureBox4.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp);
-            // 
-            // pictureBox3
-            // 
-            this.pictureBox3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pictureBox3.Image = global::radarsystem.Properties.Resources.pictureBox;
-            this.pictureBox3.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(637, 479);
-            this.pictureBox3.TabIndex = 0;
-            this.pictureBox3.TabStop = false;
-            // 
             // pictureBox2
             // 
             this.pictureBox2.BackgroundImage = global::radarsystem.Properties.Resources.header;
@@ -356,12 +361,12 @@
             this.tabControl1.ResumeLayout(false);
             this.tbp_SceneSet.ResumeLayout(false);
             this.tbp_SceneSet.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             this.tbp_SetModule.ResumeLayout(false);
             this.tbp_SetModule.PerformLayout();
             this.tbp_CharacterAnalysis.ResumeLayout(false);
             this.tbp_CharacterAnalysis.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
