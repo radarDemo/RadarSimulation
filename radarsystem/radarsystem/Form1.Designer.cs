@@ -100,9 +100,14 @@
             // 
             this.pictureBox4.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+
             //this.pictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox4.Image")));
             this.pictureBox4.BackgroundImage = global::radarsystem.Properties.Resources.radarpic;
             this.pictureBox4.Location = new System.Drawing.Point(68, 175);
+
+            this.pictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox4.Image")));
+            this.pictureBox4.Location = new System.Drawing.Point(68, 155);
+
             this.pictureBox4.Name = "pictureBox4";
             this.pictureBox4.Size = new System.Drawing.Size(58, 56);
             this.pictureBox4.TabIndex = 6;
@@ -167,6 +172,16 @@
             this.label_sel_radartype.Size = new System.Drawing.Size(89, 12);
             this.label_sel_radartype.TabIndex = 1;
             this.label_sel_radartype.Text = "雷达类型选择：";
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.pictureBox3.Image = global::radarsystem.Properties.Resources.pictureBox;
+            this.pictureBox3.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(637, 479);
+            this.pictureBox3.TabIndex = 0;
+            this.pictureBox3.TabStop = false;
             // 
             // pictureBox3
             // 
@@ -297,7 +312,7 @@
             this.numbercolumn});
             this.featurelistView.Location = new System.Drawing.Point(643, 76);
             this.featurelistView.Name = "featurelistView";
-            this.featurelistView.Size = new System.Drawing.Size(121, 178);
+            this.featurelistView.Size = new System.Drawing.Size(121, 342);
             this.featurelistView.TabIndex = 3;
             this.featurelistView.UseCompatibleStateImageBehavior = false;
             // 

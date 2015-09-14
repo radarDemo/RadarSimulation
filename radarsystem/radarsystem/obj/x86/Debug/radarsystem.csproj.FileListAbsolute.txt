@@ -6,6 +6,7 @@ E:\GitHubReposit\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsyst
 E:\GitHubReposit\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.exe
 E:\GitHubReposit\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.pdb
 E:\GitHubReposit\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.csprojResolveAssemblyReference.cache
+<<<<<<< HEAD
 E:\github\lyan\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.exe
 E:\github\lyan\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.pdb
 E:\github\lyan\RadarSimulation\radarsystem\radarsystem\bin\x86\Debug\radarsystem.exe
@@ -13,3 +14,13 @@ E:\github\lyan\RadarSimulation\radarsystem\radarsystem\bin\x86\Debug\radarsystem
 E:\github\lyan\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.Form1.resources
 E:\github\lyan\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.Properties.Resources.resources
 E:\github\lyan\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.csproj.GenerateResource.Cache
+=======
+C:\Users\lemon\Desktop\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.exe
+C:\Users\lemon\Desktop\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.pdb
+C:\Users\lemon\Desktop\RadarSimulation\radarsystem\radarsystem\bin\x86\Debug\radarsystem.exe
+C:\Users\lemon\Desktop\RadarSimulation\radarsystem\radarsystem\bin\x86\Debug\radarsystem.pdb
+C:\Users\lemon\Desktop\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.csprojResolveAssemblyReference.cache
+C:\Users\lemon\Desktop\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.Form1.resources
+C:\Users\lemon\Desktop\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.Properties.Resources.resources
+C:\Users\lemon\Desktop\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.csproj.GenerateResource.Cache
+>>>>>>> master

@@ -331,64 +331,61 @@ namespace radarsystem
             //计算时域空域特征分析
             double[] features = new double[count];
 
-            Point[] p1 = new Point[100];
-            Random ran = new Random();
-            p1[0].X = 70;
-            p1[0].Y = 70;
-            for (int i = 1; i < 100; i++)
+            PointD[] p1 = new PointD[list.Count];
+            for (int i=0;i<list.Count;i++)
             {
-                p1[i].X = ran.Next(p1[i - 1].X - 50, p1[i - 1].X + 50);
-                p1[i].Y = ran.Next(p1[i - 1].Y - 50, p1[i - 1].Y + 50);
+                p1[i] = list[i];
             }
-            
-            double[] pX = new double[100];
-            for (int i=0;i<100;i++)
+
+
+            double[] pX = new double[list.Count];
+            for (int i = 0; i < list.Count; i++)
             {
                 pX[i] = p1[i].X;
             }
             //算术平均值,arithmetic mean value
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < list.Count; i++)
             {
                 features[0] += p1[i].X;
             }
-            features[0] /= 100;
+            features[0] /= list.Count;
             featDic.Add("算术平均值", features[0]);
 
             //几何平均值,geometric mean
             features[1] = 1.0;
-            for (int i = 0; i < 100;i++ )
+            for (int i = 0; i < list.Count; i++)
             {
                 if (p1[i].X != 0)
                     features[1] *= p1[i].X;
 
             }
-            features[1] = Math.Pow(features[1], 1 / 100);
+            features[1] = Math.Pow(features[1], 1 / list.Count);
             featDic.Add("几何平均值", features[1]);
 
 
             //均方根值,root mean square value
-            for (int i = 0; i < 100;i++ )
+            for (int i = 0; i < list.Count; i++)
             {
                 features[2] += Math.Pow(p1[i].X, 2);
             }
-            features[2] /= 100;
+            features[2] /= list.Count;
             features[2] = Math.Pow(features[2], 1 / 2);
             featDic.Add("均方根值", features[2]);
 
                 //方差, variance
-            for (int i = 0; i < 100;i++ )
+            for (int i = 0; i < list.Count; i++)
             {
                 features[3] += Math.Pow(p1[i].X - features[0],2);
             }
-            features[3] /= 99;
+            features[3] /= list.Count-1;
             featDic.Add("方差", features[3]);
 
                 //标准差,standard deviation
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < list.Count; i++)
             {
                 features[4] += Math.Pow(p1[i].X - features[0], 2);
             }
-            features[4] /= 100;
+            features[4] /= list.Count;
             features[4] = Math.Pow(features[4], 1 / 2);
             featDic.Add("标准差", features[4]);
 
@@ -405,11 +402,11 @@ namespace radarsystem
             featDic["脉冲指标"] = features[7];
 
                 //方根幅值,root amplitude
-            for (int i = 0; i < 100;i++ )
+            for (int i = 0; i < list.Count; i++)
             {
                 features[8] += Math.Pow(Math.Abs(p1[i].X), 1 / 2);
             }
-            features[8] = Math.Pow(features[8] / 100, 2);
+            features[8] = Math.Pow(features[8] / list.Count, 2);
             featDic["方根幅值"] = features[8];
 
                 //裕度指标,margin indicator
@@ -417,23 +414,23 @@ namespace radarsystem
             featDic["裕度指标"] = features[9];
 
                 //峭度指标,Kurosis amplitude
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < list.Count; i++)
             {
                 features[10] += Math.Pow(p1[i].X, 4);
             }
-            features[10] /= 100;
+            features[10] /= list.Count;
             features[10] = features[10] / Math.Pow(featDic["均方根值"], 4);
             featDic["峭度指标"] = features[10];
 
                 //自相关函数,m=2,autocorrelation
-            for (int i = 0; i < 98;i++ )
+            for (int i = 0; i < (list.Count-2); i++)
             {
                 features[11] += p1[i].X * p1[i + 2].X;
             }
             featDic["自相关函数"] = features[11];
 
                 //互相关函数,cross-correlation
-            for (int i = 0; i < 98;i++ )
+            for (int i = 0; i < (list.Count-2); i++)
             {
                 features[12] += p1[i].X * p1[i + 2].Y;
             }
