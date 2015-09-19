@@ -24,3 +24,10 @@ C:\Users\lemon\Desktop\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\rad
 C:\Users\lemon\Desktop\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.Properties.Resources.resources
 C:\Users\lemon\Desktop\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.csproj.GenerateResource.Cache
 >>>>>>> master
+F:\radar4\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.exe
+F:\radar4\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.pdb
+F:\radar4\RadarSimulation\radarsystem\radarsystem\bin\x86\Debug\radarsystem.exe
+F:\radar4\RadarSimulation\radarsystem\radarsystem\bin\x86\Debug\radarsystem.pdb
+F:\radar4\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.Form1.resources
+F:\radar4\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.Properties.Resources.resources
+F:\radar4\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.csproj.GenerateResource.Cache
