@@ -6,7 +6,6 @@ E:\GitHubReposit\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsyst
 E:\GitHubReposit\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.exe
 E:\GitHubReposit\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.pdb
 E:\GitHubReposit\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.csprojResolveAssemblyReference.cache
-<<<<<<< HEAD
 E:\github\lyan\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.exe
 E:\github\lyan\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.pdb
 E:\github\lyan\RadarSimulation\radarsystem\radarsystem\bin\x86\Debug\radarsystem.exe
@@ -23,4 +22,11 @@ C:\Users\lemon\Desktop\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\rad
 C:\Users\lemon\Desktop\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.Form1.resources
 C:\Users\lemon\Desktop\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.Properties.Resources.resources
 C:\Users\lemon\Desktop\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.csproj.GenerateResource.Cache
->>>>>>> master
+F:\radar3\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.exe
+F:\radar3\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.pdb
+F:\radar3\RadarSimulation\radarsystem\radarsystem\bin\x86\Debug\radarsystem.exe
+F:\radar3\RadarSimulation\radarsystem\radarsystem\bin\x86\Debug\radarsystem.pdb
+F:\radar3\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.Form1.resources
+F:\radar3\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.Properties.Resources.resources
+F:\radar3\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.csproj.GenerateResource.Cache
+F:\radar3\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.csprojResolveAssemblyReference.cache

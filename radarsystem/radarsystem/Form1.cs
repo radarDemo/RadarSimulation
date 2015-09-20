@@ -9,12 +9,15 @@ using System.Windows.Forms;
 using System.Threading;
 using System.Data.OleDb;
 using System.Collections;
+using System.IO;
+
+//　　System.Text;
 namespace radarsystem
 {
     public partial class Form1 : Form
     {
         //自适应窗口类
-        AutoSizeFormClass autoForm = new AutoSizeFormClass();
+     //   AutoSizeFormClass autoForm = new AutoSizeFormClass();
 
         List<PointD> list = new List<PointD>();
         List<Point> list_trace = new List<Point>();
@@ -38,11 +41,17 @@ namespace radarsystem
             textBox_doppler.Visible = false;
             button_goback.Visible = false;
             pictureBox4.Visible = false;
+            button_update_config.Visible = false;
+            label_sel_radartype.Visible = false;
+            buttonDectecModeling.Visible = false;
+            buttonModelDone.Visible = false;
+            groupBox2.Visible = false;
+            groupBox3.Visible = false;
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            autoForm.controllInitializeSize(this);
+            //autoForm.controllInitializeSize(this);
             //MessageBox.Show("ha");
             string ConStr = string.Format(@"Provider=Microsoft.Jet.OLEDB.4.0;
                             Data source="+Application.StartupPath+"\\database\\whut\\RecognitionAid.mdb");
@@ -262,61 +271,69 @@ namespace radarsystem
                 System.Threading.Thread.Sleep(400);
             }
         }
-        private void checkedListBox_radartype_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (checkedListBox_radartype.GetItemChecked(0))
-            {
-                label_sel_radartype.Text = "多普勒雷达";
-                checkedListBox_radartype.Hide();
-                textBox_doppler.Visible=true;
-                textBox_doppler.Text="检测范围\r\n\r\n距离精度\r\n\r\n目标速度\r\n\r\n速度精度";
-                button_goback.Visible = true;
-                //pictureBox4.Image = Bitmap.FromFile(AppDomain.CurrentDomain.BaseDirectory + "\..\\..\\..\\radarsystem\\Resources\\多普勒雷达.jpg");
-                pictureBox4.BackgroundImage = global::radarsystem.Properties.Resources.duopule;
-                pictureBox4.Visible = true;
-                drawtrace();
-            //    draw_monitor_trace();
-           //     PaintEventArgs pe = new PaintEventArgs(this.CreateGraphics(), this.ClientRectangle);
-            //    pictureBox3_Paint(sender,pe);
+        //private void checkedListBox_radartype_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    if (checkedListBox_radartype.GetItemChecked(0))
+        //    {
+        //        label_sel_radartype.Text = "多普勒雷达";
+        //        checkedListBox_radartype.Hide();
+        //        textBox_doppler.Visible=true;
+        //        textBox_doppler.Text="检测范围\r\n\r\n距离精度\r\n\r\n目标速度\r\n\r\n速度精度";
+        //        button_goback.Visible = true;
+        //        //pictureBox4.Image = Bitmap.FromFile(AppDomain.CurrentDomain.BaseDirectory + "\..\\..\\..\\radarsystem\\Resources\\多普勒雷达.jpg");
+        //        pictureBox4.BackgroundImage = global::radarsystem.Properties.Resources.duopule;
+        //        pictureBox4.Visible = true;
+        //        drawtrace();
+        //    //    draw_monitor_trace();
+        //   //     PaintEventArgs pe = new PaintEventArgs(this.CreateGraphics(), this.ClientRectangle);
+        //    //    pictureBox3_Paint(sender,pe);
              
-            }
-            if (checkedListBox_radartype.GetItemChecked(1))
-            {
-                label_sel_radartype.Text = "多基地雷达";
-                checkedListBox_radartype.Hide();
-                textBox_doppler.Visible = true;
-                textBox_doppler.Text = "检测范围\r\n\r\n距离精度\r\n\r\n目标速度\r\n\r\n速度精度";
-                button_goback.Visible = true;
-            }
-        }
+        //    }
+        //    if (checkedListBox_radartype.GetItemChecked(1))
+        //    {
+        //        label_sel_radartype.Text = "多基地雷达";
+        //        checkedListBox_radartype.Hide();
+        //        textBox_doppler.Visible = true;
+        //        textBox_doppler.Text = "检测范围\r\n\r\n距离精度\r\n\r\n目标速度\r\n\r\n速度精度";
+        //        button_goback.Visible = true;
+        //    }
+        //}
 
         private void button_goback_Click(object sender, EventArgs e)
         {
-            label_sel_radartype.Text = "雷达类型选择";
-            checkedListBox_radartype.Show();
+           // label_sel_radartype.Text = "雷达类型选择";
+            //checkedListBox_radartype.Show();
             textBox_doppler.Visible = false;
             button_goback.Visible = false;
+            label_sel_radartype.Visible = false;
+            button_update_config.Visible = false;
+            buttonDectecModeling.Visible = false;
+            buttonModelDone.Visible = false;
+            groupBox1.Visible = true;
+            groupBox2.Visible = false;
+            groupBox3.Visible = false;
+            
         }
 
-        private void clb_setMod_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            int i;
-            strCollected = string.Empty;
-            for (i = 0; i < clb_setMod.Items.Count; i++)
-            {
-                if (clb_setMod.GetItemChecked(i))
-                {
-                    if (strCollected == string.Empty)
-                    {
-                        strCollected = clb_setMod.GetItemText(clb_setMod.Items[i]);
-                    }
-                    else
-                    {
-                        strCollected = strCollected + "，" + clb_setMod.GetItemText(clb_setMod.Items[i]);
-                    }
-                }
-            }
-        }
+        //private void clb_setMod_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    int i;
+        //    strCollected = string.Empty;
+        //    for (i = 0; i < clb_setMod.Items.Count; i++)
+        //    {
+        //        if (clb_setMod.GetItemChecked(i))
+        //        {
+        //            if (strCollected == string.Empty)
+        //            {
+        //                strCollected = clb_setMod.GetItemText(clb_setMod.Items[i]);
+        //            }
+        //            else
+        //            {
+        //                strCollected = strCollected + "，" + clb_setMod.GetItemText(clb_setMod.Items[i]);
+        //            }
+        //        }
+        //    }
+        //}
 
         private void btn_Finish_Click(object sender, EventArgs e)
         {
@@ -592,13 +609,13 @@ namespace radarsystem
         {
             //flag_thread2 = 1;
             //Control ctrl=tabControl1.GetControl(2);
-            if (tabControl1.SelectedIndex == 2)
+            if (tabControl1.SelectedIndex == 1)
                 draw_monitor_trace();
         }
 
         private void Form1_SizeChanged(object sender, EventArgs e)
         {
-            autoForm.controlAutoSize(this);
+            //autoForm.controlAutoSize(this);
         }
 
         private void Xpanel_Paint(object sender, PaintEventArgs e)
@@ -625,19 +642,194 @@ namespace radarsystem
             }
         }
 
-        private void checkedListBox_radartype_ItemCheck(object sender, ItemCheckEventArgs e)
+        //private void checkedListBox_radartype_ItemCheck(object sender, ItemCheckEventArgs e)
+        //{
+        //    if (checkedListBox_radartype.CheckedItems.Count > 0)
+        //    {
+        //        for (int i = 0; i < checkedListBox_radartype.Items.Count; i++)
+        //        {
+        //            if (i != e.Index)
+        //            {
+        //                this.checkedListBox_radartype.SetItemCheckState(i, System.Windows.Forms.CheckState.Unchecked);
+        //            }
+        //        }
+        //    }  
+        //}
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)  //第一组groupbox1中的radiobutton,都对应了这个事件
         {
-            if (checkedListBox_radartype.CheckedItems.Count > 0)
+            if (radioButton1.Checked == true)  //选中了第一个单选按钮，即选择了多普勒雷达
             {
-                for (int i = 0; i < checkedListBox_radartype.Items.Count; i++)
-                {
-                    if (i != e.Index)
-                    {
-                        this.checkedListBox_radartype.SetItemCheckState(i, System.Windows.Forms.CheckState.Unchecked);
-                    }
-                }
-            }  
+                
+              //  button_goback.Visible = true;
+                //pictureBox4.Image = Bitmap.FromFile(AppDomain.CurrentDomain.BaseDirectory + "\..\\..\\..\\radarsystem\\Resources\\多普勒雷达.jpg");
+                pictureBox4.BackgroundImage = global::radarsystem.Properties.Resources.duopule;
+                pictureBox4.Visible = true;
+                buttonDectecModeling.Visible = true;
+                label_sel_radartype.Visible = true;
+                label_sel_radartype.Text = "多普勒雷达";
+                groupBox1.Visible = false;
+                drawtrace();
+                readTxt();
+               
+            }
+            if (radioButton2.Checked == true)  //选中了第二个单选按钮，即选择了多基地雷达
+            {
+
+                //  button_goback.Visible = true;
+                //pictureBox4.Image = Bitmap.FromFile(AppDomain.CurrentDomain.BaseDirectory + "\..\\..\\..\\radarsystem\\Resources\\多普勒雷达.jpg");
+                pictureBox4.BackgroundImage = global::radarsystem.Properties.Resources.radarpic;  //还没替换为多基地雷达图标
+                pictureBox4.Visible = true;
+                buttonDectecModeling.Visible = true;
+                label_sel_radartype.Visible = true;
+                label_sel_radartype.Text = "多基地雷达";
+                groupBox1.Visible = false;
+                drawtrace();
+                readTxt();
+
+            }
+            if (radioButton3.Checked == true)  //选中了第3个单选按钮，即选择了超视距雷达
+            {
+
+                //  button_goback.Visible = true;
+                //pictureBox4.Image = Bitmap.FromFile(AppDomain.CurrentDomain.BaseDirectory + "\..\\..\\..\\radarsystem\\Resources\\多普勒雷达.jpg");
+                pictureBox4.BackgroundImage = global::radarsystem.Properties.Resources.radarpic;  //还没替换为多基地雷达图标
+                pictureBox4.Visible = true;
+                buttonDectecModeling.Visible = true;
+                label_sel_radartype.Visible = true;
+                label_sel_radartype.Text = "超视距雷达";
+                groupBox1.Visible = false;
+                drawtrace();
+                readTxt();
+
+            }
+            if (radioButton4.Checked == true)  //选中了第4个单选按钮，即选择了声呐
+            {
+
+                //  button_goback.Visible = true;
+                //pictureBox4.Image = Bitmap.FromFile(AppDomain.CurrentDomain.BaseDirectory + "\..\\..\\..\\radarsystem\\Resources\\多普勒雷达.jpg");
+                pictureBox4.BackgroundImage = global::radarsystem.Properties.Resources.radarpic;  //还没替换为多基地雷达图标
+                pictureBox4.Visible = true;
+                buttonDectecModeling.Visible = true;
+                label_sel_radartype.Visible = true;
+                label_sel_radartype.Text = "声呐";
+                groupBox1.Visible = false;
+                drawtrace();
+                readTxt();
+
+            }
+            if (radioButton5.Checked == true)  //选中了第5个单选按钮，即选择了电子对抗
+            {
+
+                //  button_goback.Visible = true;
+                //pictureBox4.Image = Bitmap.FromFile(AppDomain.CurrentDomain.BaseDirectory + "\..\\..\\..\\radarsystem\\Resources\\多普勒雷达.jpg");
+                pictureBox4.BackgroundImage = global::radarsystem.Properties.Resources.radarpic;  //还没替换为多基地雷达图标
+                pictureBox4.Visible = true;
+                buttonDectecModeling.Visible = true;
+                label_sel_radartype.Visible = true;
+                label_sel_radartype.Text = "电子对抗";
+                groupBox1.Visible = false;
+                drawtrace();
+                readTxt();
+
+            }
+            if (radioButton6.Checked == true)  //选中了第6个单选按钮，即选择了指挥控制
+            {
+
+                //  button_goback.Visible = true;
+                //pictureBox4.Image = Bitmap.FromFile(AppDomain.CurrentDomain.BaseDirectory + "\..\\..\\..\\radarsystem\\Resources\\多普勒雷达.jpg");
+                pictureBox4.BackgroundImage = global::radarsystem.Properties.Resources.radarpic; 
+                //还没替换为指挥控制雷达图标，2部雷达？
+                pictureBox4.Visible = true;
+                buttonDectecModeling.Visible = true;
+                label_sel_radartype.Visible = true;
+                label_sel_radartype.Text = "指挥控制";
+                groupBox1.Visible = false;
+                drawtrace();
+                readTxt();
+
+            }
         }
+
+        private void readTxt()
+        {
+            textBox_doppler.Visible = true;
+            button_update_config.Visible = true;
+            textBox_doppler.Text = "";
+           // textBox_doppler.Text = "检测范围\r\n\r\n距离精度\r\n\r\n目标速度\r\n\r\n速度精度";
+            String path = Application.StartupPath+"\\configure.txt";
+            StreamReader sr = new StreamReader(path, Encoding.Default);
+            String line;
+            while ((line = sr.ReadLine()) != null)
+            {
+              //  Console.WriteLine(line.ToString());
+                textBox_doppler.Text += line.ToString();
+                textBox_doppler.Text += "\r\n";
+            }
+            sr.Close();
+        }
+
+        private void OnButtonUpdateConfigClick(object sender, EventArgs e)  //更新配置文件响应事件
+        {
+            readTxt();
+        }
+
+        private void OnButtonDetectModeling(object sender, EventArgs e)  //探测建模按钮响应事件
+        {
+            if (radioButton6.Checked == false)  //不是指挥控制
+            {
+                groupBox1.Visible = false;
+                buttonDectecModeling.Visible = false;
+                button_update_config.Visible = false;
+                textBox_doppler.Visible = false;
+                groupBox2.Visible = true;
+                buttonModelDone.Visible = true;
+                button_goback.Visible = true;     //需要在程序最前面 说明每个控件的名字代表的意义，方便阅读代码
+                button_goback.Enabled = false;
+                radioButton7.Checked = false;     //清除单选按钮选中状态
+                radioButton8.Checked = false;
+                radioButton9.Checked = false;
+            }
+            else
+            {
+                groupBox1.Visible = false;
+                buttonDectecModeling.Visible = false;
+                button_update_config.Visible = false;
+                textBox_doppler.Visible = false;
+                groupBox2.Visible = true;
+                groupBox3.Visible = true;
+                buttonModelDone.Visible = true;
+                button_goback.Visible = true;
+                button_goback.Enabled = false;
+                radioButton7.Checked = false;     //清除单选按钮选中状态
+                radioButton8.Checked = false;
+                radioButton9.Checked = false;
+            }
+        }
+
+        private void OnButtonModelDone(object sender, EventArgs e)
+        {
+            if (radioButton7.Checked == true)
+            {
+                MessageBox.Show("congratulations! 添加噪声完毕，你选择添加了高斯白噪声");
+                button_goback.Enabled = true;
+            }
+            else if (radioButton8.Checked == true)
+            {    MessageBox.Show("congratulations! 添加噪声完毕，你选择添加了泊松噪声");
+                button_goback.Enabled = true;
+            }
+            else if (radioButton9.Checked == true)
+            {
+                MessageBox.Show("congratulations! 添加噪声完毕，你选择添加了平均噪声");
+                button_goback.Enabled = true;
+            }
+            else
+                MessageBox.Show("请选择添加一种噪声");
+        }
+        //private void radioButton5_CheckedChanged(object sender, EventArgs e)
+        //{
+
+        //}
 
     
 
