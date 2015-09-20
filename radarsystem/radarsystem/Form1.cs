@@ -749,22 +749,136 @@ namespace radarsystem
                 readTxt();
 
             }
+            button_goback.Visible = true;
         }
-
+        
         private void readTxt()
         {
             textBox_doppler.Visible = true;
             button_update_config.Visible = true;
+            string str_temp="";
             textBox_doppler.Text = "";
            // textBox_doppler.Text = "检测范围\r\n\r\n距离精度\r\n\r\n目标速度\r\n\r\n速度精度";
             String path = Application.StartupPath+"\\configure.txt";
             StreamReader sr = new StreamReader(path, Encoding.Default);
             String line;
-            while ((line = sr.ReadLine()) != null)
+            while ((line = sr.ReadLine()) != null )
             {
               //  Console.WriteLine(line.ToString());
-                textBox_doppler.Text += line.ToString();
-                textBox_doppler.Text += "\r\n";
+                if (radioButton1.Checked == true)
+                {
+                    if (line.ToString() == "多普勒雷达")
+                    {                      
+                        while((line=sr.ReadLine())!=null)
+                        {
+                            textBox_doppler.Text += line.ToString();
+                            textBox_doppler.Text += "\r\n";
+                            if(line.ToString()!="" &&line.Substring(0,5)=="-----")  //内层循环终止条件
+                            {
+                                break;
+                            }
+                            
+                        }
+                        break;  //外层循环终止
+                    }
+                   
+                  
+                }
+                else if (radioButton2.Checked == true)
+                {
+                    if (line.ToString() == "多基地雷达")
+                    {
+                        while ((line = sr.ReadLine()) != null)
+                        {
+                            textBox_doppler.Text += line.ToString();
+                            textBox_doppler.Text += "\r\n";
+                            if (line.ToString() != "" && line.Substring(0, 5) == "-----")  //内层循环终止条件
+                            {
+                                break;
+                            }
+
+                        }
+                        break;  //外层循环终止
+                    }
+                  
+
+                }
+                else if (radioButton3.Checked == true)
+                {
+                    if (line.ToString() == "超视距雷达")
+                    {
+                        while ((line = sr.ReadLine()) != null)
+                        {
+                            textBox_doppler.Text += line.ToString();
+                            textBox_doppler.Text += "\r\n";
+                            if (line.ToString() != "" && line.Substring(0, 5) == "-----")  //内层循环终止条件
+                            {
+                                break;
+                            }
+
+                        }
+                        break;  //外层循环终止
+                    }
+                    
+
+                }
+                else if (radioButton4.Checked == true)
+                {
+                    if (line.ToString() == "声呐")
+                    {
+                        while ((line = sr.ReadLine()) != null)
+                        {
+                            textBox_doppler.Text += line.ToString();
+                            textBox_doppler.Text += "\r\n";
+                            if (line.ToString() != "" && line.Substring(0, 5) == "-----")  //内层循环终止条件
+                            {
+                                break;
+                            }
+
+                        }
+                        break;  //外层循环终止
+                    }
+                
+
+                }
+                else if (radioButton5.Checked == true)
+                {
+                    if (line.ToString() == "电子对抗")
+                    {
+                        while ((line = sr.ReadLine()) != null)
+                        {
+                            textBox_doppler.Text += line.ToString();
+                            textBox_doppler.Text += "\r\n";
+                            if (line.ToString() != "" && line.Substring(0, 5) == "-----")  //内层循环终止条件
+                            {
+                                break;
+                            }
+
+                        }
+                        break;  //外层循环终止
+                    }
+                    
+
+                }
+                else if(radioButton6.Checked == true)
+                {
+                    if (line.ToString() == "指挥控制")
+                    {
+                        while ((line = sr.ReadLine()) != null)
+                        {
+                            textBox_doppler.Text += line.ToString();
+                            textBox_doppler.Text += "\r\n";
+                            if (line.ToString() != "" && line.Substring(0, 5) == "-----")  //内层循环终止条件
+                            {
+                                break;
+                            }
+
+                        }
+                        break;  //外层循环终止
+                    }
+                    
+
+                }
             }
             sr.Close();
         }
