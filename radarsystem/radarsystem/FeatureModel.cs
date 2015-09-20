@@ -23,7 +23,6 @@ namespace radarsystem
                 p1[i] = list[i];
             }
 
-
             double[] pX = new double[list.Count];
             for (int i = 0; i < list.Count; i++)
             {
@@ -134,6 +133,77 @@ namespace radarsystem
             Dictionary<String, Double> frequencyFeature = new Dictionary<string, double>();
 
             return frequencyFeature;
+        }
+
+        /// <summary>
+        /// 傅立叶变换或反变换，递归实现多级蝶形运算
+        /// 作为反变换输出需要再除以序列长度
+        /// 注意：输入此类的序列长度必须是2^n
+        /// </summary>
+        /// <param name="input">复数输入序列</param>
+        /// <param name="invert">fasle=正变换，true=反变换</param>
+        /// <returns>傅立叶变换后或反变换后的序列</returns>
+        public Complex[] FFT(Complex[] input, bool invert)
+        {
+
+            if (input.Length == 1)
+            {
+                return new Complex[] { input[0] };
+            }
+
+            //输入序列的长度
+            int length = input.Length;
+
+            //输入序列长度的一半
+            int half = length / 2;
+
+            //由输入序列长度确定输出序列的长度
+            Complex[] output = new Complex[input.Length];
+
+            //正变换旋转因子的基数
+            double factor = -2.0 * Math.PI / length;
+
+            //反变换旋转因子的基数是正变换的相反数
+            if (invert)
+            {
+                factor = -1 * factor;
+            }
+
+            //序列中下标为偶数的点
+            Complex[] evens = new Complex[half];
+
+            for (int i = 0; i < half; i++)
+            {
+                evens[i] = input[2 * i];
+            }
+
+            ///求偶数点FFT或IFFT的结果，递归实现多级蝶形运算
+            Complex[] evenResult = FFT(evens, invert);
+
+            ///序列中下标为奇数的点
+            Complex[] odds = new Complex[half];
+
+            for (int i = 0; i < half; i++)
+            {
+                odds[i] = input[2 * i + 1];
+            }
+
+            ///求偶数点FFT或IFFT的结果，递归实现多级蝶形运算
+            Complex[] oddResult = FFT(odds, invert);
+
+            for (int k = 0; k < half; k++)
+            {
+                ///旋转因子
+                double fack = factor * k;
+
+                ///进行蝶形运算
+                Complex oddPart = oddResult[k] * new Complex(Math.Cos(fack), Math.Sin(fack));
+                output[k] = evenResult[k] + oddPart;
+                output[k + half] = evenResult[k] - oddPart;
+            }
+
+            ///返回FFT或IFFT的结果
+            return output;
         }
        
     }
