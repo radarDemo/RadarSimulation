@@ -50,6 +50,7 @@
             this.radioButton11 = new System.Windows.Forms.RadioButton();
             this.radioButton10 = new System.Windows.Forms.RadioButton();
             this.buttonDectecModeling = new System.Windows.Forms.Button();
+            this.textBox_doppler = new System.Windows.Forms.TextBox();
             this.button_update_config = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.radioButton6 = new System.Windows.Forms.RadioButton();
@@ -68,7 +69,6 @@
             this.radioButton8 = new System.Windows.Forms.RadioButton();
             this.radioButton7 = new System.Windows.Forms.RadioButton();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.textBox_doppler = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tbp_CharacterAnalysis.SuspendLayout();
@@ -93,7 +93,7 @@
             this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pictureBox2.Location = new System.Drawing.Point(-2, 0);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(804, 56);
+            this.pictureBox2.Size = new System.Drawing.Size(925, 56);
             this.pictureBox2.TabIndex = 1;
             this.pictureBox2.TabStop = false;
             // 
@@ -211,20 +211,19 @@
             this.tbp_SceneSet.Controls.Add(this.pictureBox4);
             this.tbp_SceneSet.Controls.Add(this.button_goback);
             this.tbp_SceneSet.Controls.Add(this.label_state);
-            this.tbp_SceneSet.Controls.Add(this.label_sel_radartype);
             this.tbp_SceneSet.Controls.Add(this.pictureBox3);
             this.tbp_SceneSet.Controls.Add(this.groupBox2);
             this.tbp_SceneSet.Location = new System.Drawing.Point(4, 22);
             this.tbp_SceneSet.Name = "tbp_SceneSet";
             this.tbp_SceneSet.Padding = new System.Windows.Forms.Padding(3);
-            this.tbp_SceneSet.Size = new System.Drawing.Size(788, 479);
+            this.tbp_SceneSet.Size = new System.Drawing.Size(917, 534);
             this.tbp_SceneSet.TabIndex = 0;
             this.tbp_SceneSet.Text = "岸基场景设置";
             this.tbp_SceneSet.UseVisualStyleBackColor = true;
             // 
             // buttonModelDone
             // 
-            this.buttonModelDone.Location = new System.Drawing.Point(643, 355);
+            this.buttonModelDone.Location = new System.Drawing.Point(774, 396);
             this.buttonModelDone.Name = "buttonModelDone";
             this.buttonModelDone.Size = new System.Drawing.Size(75, 23);
             this.buttonModelDone.TabIndex = 12;
@@ -237,9 +236,9 @@
             this.groupBox3.Controls.Add(this.radioButton12);
             this.groupBox3.Controls.Add(this.radioButton11);
             this.groupBox3.Controls.Add(this.radioButton10);
-            this.groupBox3.Location = new System.Drawing.Point(646, 234);
+            this.groupBox3.Location = new System.Drawing.Point(774, 234);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(125, 98);
+            this.groupBox3.Size = new System.Drawing.Size(133, 98);
             this.groupBox3.TabIndex = 11;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "选择噪声类型（2#）";
@@ -280,17 +279,26 @@
             // 
             // buttonDectecModeling
             // 
-            this.buttonDectecModeling.Location = new System.Drawing.Point(517, 338);
+            this.buttonDectecModeling.Location = new System.Drawing.Point(774, 367);
             this.buttonDectecModeling.Name = "buttonDectecModeling";
-            this.buttonDectecModeling.Size = new System.Drawing.Size(75, 23);
+            this.buttonDectecModeling.Size = new System.Drawing.Size(98, 23);
             this.buttonDectecModeling.TabIndex = 9;
             this.buttonDectecModeling.Text = "探测建模";
             this.buttonDectecModeling.UseVisualStyleBackColor = true;
             this.buttonDectecModeling.Click += new System.EventHandler(this.OnButtonDetectModeling);
             // 
+            // textBox_doppler
+            // 
+            this.textBox_doppler.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox_doppler.Location = new System.Drawing.Point(774, 43);
+            this.textBox_doppler.Multiline = true;
+            this.textBox_doppler.Name = "textBox_doppler";
+            this.textBox_doppler.Size = new System.Drawing.Size(120, 214);
+            this.textBox_doppler.TabIndex = 4;
+            // 
             // button_update_config
             // 
-            this.button_update_config.Location = new System.Drawing.Point(517, 309);
+            this.button_update_config.Location = new System.Drawing.Point(774, 338);
             this.button_update_config.Name = "button_update_config";
             this.button_update_config.Size = new System.Drawing.Size(98, 23);
             this.button_update_config.TabIndex = 8;
@@ -306,7 +314,8 @@
             this.groupBox1.Controls.Add(this.radioButton3);
             this.groupBox1.Controls.Add(this.radioButton2);
             this.groupBox1.Controls.Add(this.radioButton1);
-            this.groupBox1.Location = new System.Drawing.Point(643, 43);
+            this.groupBox1.Controls.Add(this.label_sel_radartype);
+            this.groupBox1.Location = new System.Drawing.Point(774, 43);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(125, 183);
             this.groupBox1.TabIndex = 7;
@@ -402,7 +411,7 @@
             // 
             // button_goback
             // 
-            this.button_goback.Location = new System.Drawing.Point(646, 396);
+            this.button_goback.Location = new System.Drawing.Point(774, 425);
             this.button_goback.Name = "button_goback";
             this.button_goback.Size = new System.Drawing.Size(75, 23);
             this.button_goback.TabIndex = 5;
@@ -413,7 +422,7 @@
             // label_state
             // 
             this.label_state.AutoSize = true;
-            this.label_state.Location = new System.Drawing.Point(644, 439);
+            this.label_state.Location = new System.Drawing.Point(774, 501);
             this.label_state.Name = "label_state";
             this.label_state.Size = new System.Drawing.Size(125, 24);
             this.label_state.TabIndex = 3;
@@ -422,7 +431,7 @@
             // label_sel_radartype
             // 
             this.label_sel_radartype.AutoSize = true;
-            this.label_sel_radartype.Location = new System.Drawing.Point(515, 17);
+            this.label_sel_radartype.Location = new System.Drawing.Point(-2, -15);
             this.label_sel_radartype.Name = "label_sel_radartype";
             this.label_sel_radartype.Size = new System.Drawing.Size(53, 12);
             this.label_sel_radartype.TabIndex = 1;
@@ -434,7 +443,7 @@
             this.pictureBox3.Image = global::radarsystem.Properties.Resources.pictureBox;
             this.pictureBox3.Location = new System.Drawing.Point(0, 0);
             this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(637, 479);
+            this.pictureBox3.Size = new System.Drawing.Size(756, 531);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox3.TabIndex = 0;
             this.pictureBox3.TabStop = false;
@@ -444,7 +453,7 @@
             this.groupBox2.Controls.Add(this.radioButton9);
             this.groupBox2.Controls.Add(this.radioButton8);
             this.groupBox2.Controls.Add(this.radioButton7);
-            this.groupBox2.Location = new System.Drawing.Point(643, 33);
+            this.groupBox2.Location = new System.Drawing.Point(774, 43);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(125, 100);
             this.groupBox2.TabIndex = 10;
@@ -491,24 +500,15 @@
             this.tabControl1.Location = new System.Drawing.Point(-2, 62);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(796, 505);
+            this.tabControl1.Size = new System.Drawing.Size(925, 560);
             this.tabControl1.TabIndex = 3;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.Feature_SelectedIndexChanged);
-            // 
-            // textBox_doppler
-            // 
-            this.textBox_doppler.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox_doppler.Location = new System.Drawing.Point(517, 59);
-            this.textBox_doppler.Multiline = true;
-            this.textBox_doppler.Name = "textBox_doppler";
-            this.textBox_doppler.Size = new System.Drawing.Size(120, 214);
-            this.textBox_doppler.TabIndex = 4;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(806, 573);
+            this.ClientSize = new System.Drawing.Size(921, 618);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.pictureBox1);
