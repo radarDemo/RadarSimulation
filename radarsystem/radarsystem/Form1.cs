@@ -650,7 +650,7 @@ namespace radarsystem
         {
             textBox_doppler.Visible = true;
             button_update_config.Visible = true;
-            string str_temp="";
+            //string str_temp="";
             textBox_doppler.Text = "";
            // textBox_doppler.Text = "检测范围\r\n\r\n距离精度\r\n\r\n目标速度\r\n\r\n速度精度";
             String path = Application.StartupPath+"\\configure.txt";
