@@ -28,8 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tbp_CharacterAnalysis = new System.Windows.Forms.TabPage();
@@ -59,10 +57,10 @@
             this.radioButton3 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.label_sel_radartype = new System.Windows.Forms.Label();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.button_goback = new System.Windows.Forms.Button();
             this.label_state = new System.Windows.Forms.Label();
-            this.label_sel_radartype = new System.Windows.Forms.Label();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.radioButton9 = new System.Windows.Forms.RadioButton();
@@ -81,11 +79,6 @@
             this.groupBox2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // timer1
-            // 
-            this.timer1.Interval = 1000;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // pictureBox2
             // 
@@ -116,7 +109,7 @@
             this.tbp_CharacterAnalysis.Controls.Add(this.featurecomboBox1);
             this.tbp_CharacterAnalysis.Location = new System.Drawing.Point(4, 22);
             this.tbp_CharacterAnalysis.Name = "tbp_CharacterAnalysis";
-            this.tbp_CharacterAnalysis.Size = new System.Drawing.Size(788, 479);
+            this.tbp_CharacterAnalysis.Size = new System.Drawing.Size(917, 534);
             this.tbp_CharacterAnalysis.TabIndex = 2;
             this.tbp_CharacterAnalysis.Text = "特性分析";
             this.tbp_CharacterAnalysis.UseVisualStyleBackColor = true;
@@ -166,12 +159,15 @@
             this.checkBox1.TabIndex = 8;
             this.checkBox1.Text = "真实轨迹";
             this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // featurelistView
             // 
             this.featurelistView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.algorithmcolumn,
             this.numbercolumn});
+            this.featurelistView.AutoResizeColumns(System.Windows.Forms.ColumnHeaderAutoResizeStyle.HeaderSize);
+            
             this.featurelistView.Location = new System.Drawing.Point(607, 76);
             this.featurelistView.Name = "featurelistView";
             this.featurelistView.Size = new System.Drawing.Size(167, 389);
@@ -394,6 +390,15 @@
             this.radioButton1.UseVisualStyleBackColor = true;
             this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
             // 
+            // label_sel_radartype
+            // 
+            this.label_sel_radartype.AutoSize = true;
+            this.label_sel_radartype.Location = new System.Drawing.Point(-2, -15);
+            this.label_sel_radartype.Name = "label_sel_radartype";
+            this.label_sel_radartype.Size = new System.Drawing.Size(53, 12);
+            this.label_sel_radartype.TabIndex = 1;
+            this.label_sel_radartype.Text = "雷达类型";
+            // 
             // pictureBox4
             // 
             this.pictureBox4.BackColor = System.Drawing.Color.Transparent;
@@ -427,15 +432,6 @@
             this.label_state.Size = new System.Drawing.Size(125, 24);
             this.label_state.TabIndex = 3;
             this.label_state.Text = "说明：请将雷达移动到\r\n左边地图对应位置";
-            // 
-            // label_sel_radartype
-            // 
-            this.label_sel_radartype.AutoSize = true;
-            this.label_sel_radartype.Location = new System.Drawing.Point(-2, -15);
-            this.label_sel_radartype.Name = "label_sel_radartype";
-            this.label_sel_radartype.Size = new System.Drawing.Size(53, 12);
-            this.label_sel_radartype.TabIndex = 1;
-            this.label_sel_radartype.Text = "雷达类型";
             // 
             // pictureBox3
             // 
@@ -544,7 +540,6 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBox2;
         private string strCollected;
-        private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.TabPage tbp_CharacterAnalysis;
         private System.Windows.Forms.Panel Ypanel;
         private System.Windows.Forms.Panel Xpanel;
