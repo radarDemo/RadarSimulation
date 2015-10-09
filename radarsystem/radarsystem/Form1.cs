@@ -20,7 +20,8 @@ namespace radarsystem
 
         List<PointD> list = new List<PointD>();
         List<Point> list_trace = new List<Point>();
-
+        ArrayList arr_tar=new ArrayList() ;  //目标ID数组
+   
         //存储添加噪音后的轨迹点
         List<PointD> guassianList ;
         List<PointD> poissonList;
@@ -33,6 +34,8 @@ namespace radarsystem
         private int currentX = 0, currentY = 0; //原来鼠标X,Y坐标
         bool flag_thread2 = false;
         bool flag_thread1 = false;
+        bool flag_editchange = false;  //对应的配置文件文本框内容发生改变
+        bool flag_init_editchange = false; //第一次加载时候，文本框内容会发生改变
         Thread t2;
         Thread t1;
      //用pictureBox4 的左上角坐标表示雷达的中心点坐标
@@ -50,6 +53,26 @@ namespace radarsystem
             buttonModelDone.Visible = false;
             groupBox2.Visible = false;
             groupBox3.Visible = false;
+            button_text_update.Visible = false;
+
+            textBox_juli.Visible = false;
+            textBox_zaipin.Visible = false;
+            textBox_chongpin.Visible = false;
+            textBox_maikuan.Visible = false;
+            textBox_maifu.Visible = false;
+            textBox_saomiao.Visible = false;
+            textBox_jiebianliang.Visible = false;
+            textBox_doudongliang.Visible = false;
+
+            ArrayList ToolList = new ArrayList();
+            ToolList.Add(MapXLib.ToolConstants.miZoomInTool);
+            ToolList.Add(MapXLib.ToolConstants.miZoomOutTool);
+            ToolList.Add(MapXLib.ToolConstants.miPanTool);
+            ToolList.Add(MapXLib.ToolConstants.miCenterTool);
+            ToolList.Add(MapXLib.ToolConstants.miLabelTool);
+
+            comboBox_ToolList.DataSource = ToolList;
+            //CMapXFeature FtA
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -78,7 +101,7 @@ namespace radarsystem
             {
 
                 Point s = new Point();                  // 实例化Point对象
-                s.X = Convert.ToInt32(ds.Tables[0].Rows[i]["X"]);
+                s.X = Convert.ToInt32(ds.Tables[0].Rows[i]["X"]);  //X，Y看做是经度纬度
                 s.Y = Convert.ToInt32(ds.Tables[0].Rows[i]["Y"]);
 
                 list_trace.Add(s);    // 将取出的对象保存在LIST中  以上是获得值。
@@ -102,17 +125,9 @@ namespace radarsystem
 
         }
         private void drawtrace()
-        {
-            //Thread t1 = new Thread(new ThreadStart(TestMethod));
-            //t1.IsBackground = true;
-            //if(!t1.IsAlive)
-            //    t1.Start();
+        {          
             if (!flag_thread1)
-            {
-                //  t2.Abort();
-                //   t2 = new Thread(new ThreadStart(thread2));
-                //  t2 = new Thread(new ThreadStart(thread2));
-                //  t2.IsBackground = true;
+            {             
                 t1 = new Thread(new ThreadStart(TestMethod));
                 t1.IsBackground = true;
                 t1.Start();
@@ -134,33 +149,10 @@ namespace radarsystem
         {
             Graphics g;
             
-            g =pictureBox3.CreateGraphics();
+            g =axMap1.CreateGraphics();
     //        g.s
-            Pen p = new Pen(Color.Red, 2);
-            //Point[] p1 = new Point[100];
-            //Random ran = new Random();
-            //p1[0].X = 70;
-            //p1[0].Y = 70;
-            //for (int i = 1; i < 100; i++)
-            //{
-            //    p1[i].X = ran.Next(p1[i - 1].X - 50, p1[i - 1].X + 50);
-            //    p1[i].Y = ran.Next(p1[i - 1].Y - 50, p1[i - 1].Y + 50);
-            //}
-            //Point one, two;
-            //for (int i = 0; i < 99; i++)
-            //{
-            //    one = p1[i];
-            //    two = p1[i + 1];
-            //    g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            //    g.DrawLine(p, one, two);
-            //    System.Threading.Thread.Sleep(500);
-            //}
-            //foreach (PointD p1 in AL)
-            //{
-            //    Console.WriteLine(p1.X);
-
-            //    Console.WriteLine(p1.Y);
-            //}
+            Pen p = new Pen(Color.Red, 2);         
+           
             Point one, two;
             for (int i = 0; i < list_trace.Count-1; i++)
             {
@@ -176,47 +168,9 @@ namespace radarsystem
             g.Dispose();
         }
         private void draw_monitor_trace(List<PointD> points)
-        {
-           // Graphics g;
-           // Pen p = new Pen(Color.Red, 2);
-           // g = panel1.CreateGraphics();
-           // Point point;
-           // Point point_diff;
-           // Point cir_Point = new Point(0, 0);
-           // Point one = new Point(0, 0);
-           // Point two = new Point(0, 0);
-           // cir_Point.X = panel1.Width / 10 * 5;
-           // cir_Point.Y = panel1.Height / 10 * 5;
-           // //  point_diff.X = 300;
-           // //  point_diff.Y = 300;
-           // //point.X=pictureBox4.Top;
-           // //MessageBox.Show("3");
-        
-           // for (int i = 0; i < list_trace.Count - 1; i++)
-           // {
-           //     point = list_trace[i];
-           //     point_diff = point;
-           //     point_diff.X = point.X - pictureBox4.Left;
-           //     point_diff.Y = point.Y - pictureBox4.Top;
-           //     SolidBrush myBrush = new SolidBrush(System.Drawing.Color.Red);//画刷
-           //     g.FillEllipse(myBrush, new Rectangle(cir_Point.X + point_diff.X - 3, cir_Point.Y + point_diff.Y - 3, 3, 3));//画实心椭圆
-           //     //    g.DrawLine(new Pen(Color.Red), point_diff.X, point_diff.Y, point_diff.X, point_diff.Y);
-           //     //    g.DrawLine(new Pen(Color.Red), 200, 200,210, 210);
-           //     one.X = cir_Point.X + point_diff.X;
-           //     one.Y = cir_Point.Y + point_diff.Y;
-           //     two.X = list_trace[i + 1].X - pictureBox4.Left + cir_Point.X;
-           //     two.Y = list_trace[i + 1].Y - pictureBox4.Top + cir_Point.Y;
-           //     g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-           //     g.DrawLine(p, one, two);
-           ////     System.Threading.Thread.Sleep(500);
-           // }
-           
+        {             
             if (!flag_thread2) 
-            {
-               //  t2.Abort();
-              //   t2 = new Thread(new ThreadStart(thread2));
-              //  t2 = new Thread(new ThreadStart(thread2));
-              //  t2.IsBackground = true;
+            {            
                 t2 = new Thread(new ParameterizedThreadStart(thread2));
                 t2.IsBackground = true;
                 t2.Start(points);
@@ -236,8 +190,11 @@ namespace radarsystem
         }
         public void thread2(object o)
         {
+            
             List<PointD> points = (List<PointD>)o;
             List<Point> list_trace = new List<Point>();
+            double distance1, distance2;
+            distance1 = 7 * panel1.Width / 20;
             Graphics g;
             Pen p = new Pen(Color.Red, 2);
             g = panel1.CreateGraphics();
@@ -248,10 +205,7 @@ namespace radarsystem
             Point two = new Point(0, 0);
             cir_Point.X = panel1.Width / 10 * 5;
             cir_Point.Y = panel1.Height / 10 * 5;
-            //  point_diff.X = 300;
-            //  point_diff.Y = 300;
-            //point.X=pictureBox4.Top;
-            //MessageBox.Show("3");
+           
             for (int i = 0; i < points.Count; i++)
             {
                 //double类型的坐标转换成int
@@ -264,6 +218,9 @@ namespace radarsystem
                 point_diff = point;
                 point_diff.X = point.X - pictureBox4.Left;
                 point_diff.Y = point.Y - pictureBox4.Top;
+                distance2 = Math.Sqrt(point_diff.X * point_diff.X + point_diff.Y * point_diff.Y);
+                if (distance2 - distance1 > 0)
+                    continue;
                 SolidBrush myBrush = new SolidBrush(System.Drawing.Color.Red);//画刷
                 g.FillEllipse(myBrush, new Rectangle(cir_Point.X + point_diff.X - 3, cir_Point.Y + point_diff.Y - 3, 3, 3));//画实心椭圆
                 //    g.DrawLine(new Pen(Color.Red), point_diff.X, point_diff.Y, point_diff.X, point_diff.Y);
@@ -276,35 +233,14 @@ namespace radarsystem
                 g.DrawLine(p, one, two);
                 System.Threading.Thread.Sleep(400);
             }
+            double x1=116.41667;
+            double y1 =39.91667;   //beijing经纬度
+            double x2=114.31667;
+            double y2 = 30.51667;   //武汉经纬度
+            double dis=axMap1.Distance(x1,y1,x2,y2)*2;
+        //    textBox_longitude.Text = dis.ToString();
         }
-        //private void checkedListBox_radartype_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-        //    if (checkedListBox_radartype.GetItemChecked(0))
-        //    {
-        //        label_sel_radartype.Text = "多普勒雷达";
-        //        checkedListBox_radartype.Hide();
-        //        textBox_doppler.Visible=true;
-        //        textBox_doppler.Text="检测范围\r\n\r\n距离精度\r\n\r\n目标速度\r\n\r\n速度精度";
-        //        button_goback.Visible = true;
-        //        //pictureBox4.Image = Bitmap.FromFile(AppDomain.CurrentDomain.BaseDirectory + "\..\\..\\..\\radarsystem\\Resources\\多普勒雷达.jpg");
-        //        pictureBox4.BackgroundImage = global::radarsystem.Properties.Resources.duopule;
-        //        pictureBox4.Visible = true;
-        //        drawtrace();
-        //    //    draw_monitor_trace();
-        //   //     PaintEventArgs pe = new PaintEventArgs(this.CreateGraphics(), this.ClientRectangle);
-        //    //    pictureBox3_Paint(sender,pe);
-             
-        //    }
-        //    if (checkedListBox_radartype.GetItemChecked(1))
-        //    {
-        //        label_sel_radartype.Text = "多基地雷达";
-        //        checkedListBox_radartype.Hide();
-        //        textBox_doppler.Visible = true;
-        //        textBox_doppler.Text = "检测范围\r\n\r\n距离精度\r\n\r\n目标速度\r\n\r\n速度精度";
-        //        button_goback.Visible = true;
-        //    }
-        //}
-
+         
         private void button_goback_Click(object sender, EventArgs e)
         {
            // label_sel_radartype.Text = "雷达类型选择";
@@ -318,28 +254,19 @@ namespace radarsystem
             groupBox1.Visible = true;
             groupBox2.Visible = false;
             groupBox3.Visible = false;
+
+            textBox_juli.Visible = false;
+            textBox_zaipin.Visible = false;
+            textBox_chongpin.Visible = false;
+            textBox_maikuan.Visible = false;
+            textBox_maifu.Visible = false;
+            textBox_saomiao.Visible = false;
+            textBox_jiebianliang.Visible = false;
+            textBox_doudongliang.Visible = false;
+            button_text_update.Visible = false;
             
         }
-
-        //private void clb_setMod_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-        //    int i;
-        //    strCollected = string.Empty;
-        //    for (i = 0; i < clb_setMod.Items.Count; i++)
-        //    {
-        //        if (clb_setMod.GetItemChecked(i))
-        //        {
-        //            if (strCollected == string.Empty)
-        //            {
-        //                strCollected = clb_setMod.GetItemText(clb_setMod.Items[i]);
-        //            }
-        //            else
-        //            {
-        //                strCollected = strCollected + "，" + clb_setMod.GetItemText(clb_setMod.Items[i]);
-        //            }
-        //        }
-        //    }
-        //}
+     
 
         private void btn_Finish_Click(object sender, EventArgs e)
         {
@@ -457,9 +384,7 @@ namespace radarsystem
             screenpoint_pic4 = PointToScreen(pictureBox4.Location);
             Console.WriteLine(screenpoint_pic4.X);
 
-        }
-    //    private bool isDragging = false; //拖中
-    //    private int currentX = 0, currentY = 0; //原来鼠标X,Y坐标
+        }  
         private void OnMouseDown(object sender, MouseEventArgs e)
         {
             isDragging = true;  //可以拖动
@@ -476,21 +401,20 @@ namespace radarsystem
                 pictureBox4.Left = pictureBox4.Left + (e.X - currentX);
             }
             isDragging = false;
-      //      screenpoint_pic4 = PointToScreen(pictureBox4.Location);
-      //      Console.WriteLine(pictureBox4.Top);  
-       //     Console.WriteLine(screenpoint_pic4.Y);
-       //     Console.WriteLine(screenpoint_pic4.X);
+            drawtrace();    
            
         }
 
         private void OnMouseMove(object sender, MouseEventArgs e)
         {
             isDragging = true;  //可以拖动
-          //  if (isDragging)
-          //  {
-          //      pictureBox4.Top = pictureBox1.Top + (e.Y - currentY);
-           //     pictureBox4.Left = pictureBox1.Left + (e.X - currentX);
-          //  }
+            float X, Y;
+            X = pictureBox4.Left;  //SrnPt为鼠标点
+            Y = pictureBox4.Top;
+            double mapX1 = 0, mapY1 = 0;
+            axMap1.ConvertCoord(ref X, ref Y, ref mapX1, ref mapY1, MapXLib.ConversionConstants.miScreenToMap);
+            textBox_longitude.Text = mapX1.ToString();
+            textBox_latitude.Text = mapY1.ToString();       
         }
 
         private void Feature_SelectedIndexChanged(object sender, EventArgs e)
@@ -526,9 +450,7 @@ namespace radarsystem
         private void Form1_SizeChanged(object sender, EventArgs e)
         {
             //autoForm.controlAutoSize(this);
-        }
-
-        
+        }        
         /**
          *  显示特性分析中X坐标轴的刻度
          **/
@@ -560,24 +482,24 @@ namespace radarsystem
             {
                 g.DrawString((start - 0.2 * i).ToString(), new Font(FontFamily.GenericMonospace, 10f), Brushes.Black, new PointF(0, sLoc + addition * i));
             }
-        }
-
-        //private void checkedListBox_radartype_ItemCheck(object sender, ItemCheckEventArgs e)
-        //{
-        //    if (checkedListBox_radartype.CheckedItems.Count > 0)
-        //    {
-        //        for (int i = 0; i < checkedListBox_radartype.Items.Count; i++)
-        //        {
-        //            if (i != e.Index)
-        //            {
-        //                this.checkedListBox_radartype.SetItemCheckState(i, System.Windows.Forms.CheckState.Unchecked);
-        //            }
-        //        }
-        //    }  
-        //}
+        }      
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)  //第一组groupbox1中的radiobutton,都对应了这个事件
         {
+            if (radioButton1.Checked == true || radioButton2.Checked == true || radioButton3.Checked == true)
+            {
+
+
+                textBox_juli.Visible = true;
+                textBox_zaipin.Visible = true;
+                textBox_chongpin.Visible = true;
+                textBox_maikuan.Visible = true;
+                textBox_maifu.Visible = true;
+                textBox_saomiao.Visible = true;
+                textBox_jiebianliang.Visible = true;
+                textBox_doudongliang.Visible = true;
+                button_text_update.Visible = true;
+            }
             if (radioButton1.Checked == true)  //选中了第一个单选按钮，即选择了多普勒雷达
             {
                 
@@ -589,37 +511,41 @@ namespace radarsystem
                 label_sel_radartype.Visible = true;
                 label_sel_radartype.Text = "多普勒雷达";
                 groupBox1.Visible = false;
-                drawtrace();
+           
+                double MapX = 103, mapY = 36;  //精度 ，纬度
+                float screenX = 0, screenY = 0; //屏幕坐标
+                axMap1.ConvertCoord(ref screenX, ref screenY, ref MapX, ref mapY,
+                                    MapXLib.ConversionConstants.miMapToScreen);  //已知经纬度 转换为屏幕坐标
+            //    Graphics g = axMap1.CreateGraphics();
+                pictureBox4.Left =(int) screenX;
+                pictureBox4.Top = (int)screenY;                        
+              
+        
+                flag_init_editchange = true;
                 readTxt();
                
             }
             if (radioButton2.Checked == true)  //选中了第二个单选按钮，即选择了多基地雷达
-            {
-
-                //  button_goback.Visible = true;
-                //pictureBox4.Image = Bitmap.FromFile(AppDomain.CurrentDomain.BaseDirectory + "\..\\..\\..\\radarsystem\\Resources\\多普勒雷达.jpg");
+            {            
                 pictureBox4.BackgroundImage = global::radarsystem.Properties.Resources.radarpic;  //还没替换为多基地雷达图标
                 pictureBox4.Visible = true;
                 buttonDectecModeling.Visible = true;
                 label_sel_radartype.Visible = true;
                 label_sel_radartype.Text = "多基地雷达";
                 groupBox1.Visible = false;
-                drawtrace();
+              //  drawtrace();
                 readTxt();
 
             }
             if (radioButton3.Checked == true)  //选中了第3个单选按钮，即选择了超视距雷达
-            {
-
-                //  button_goback.Visible = true;
-                //pictureBox4.Image = Bitmap.FromFile(AppDomain.CurrentDomain.BaseDirectory + "\..\\..\\..\\radarsystem\\Resources\\多普勒雷达.jpg");
+            {                            
                 pictureBox4.BackgroundImage = global::radarsystem.Properties.Resources.radarpic;  //还没替换为多基地雷达图标
                 pictureBox4.Visible = true;
                 buttonDectecModeling.Visible = true;
                 label_sel_radartype.Visible = true;
                 label_sel_radartype.Text = "超视距雷达";
                 groupBox1.Visible = false;
-                drawtrace();
+               // drawtrace();
                 readTxt();
 
             }
@@ -632,32 +558,26 @@ namespace radarsystem
                 pictureBox4.Visible = true;
                 buttonDectecModeling.Visible = true;
                 label_sel_radartype.Visible = true;
-                label_sel_radartype.Text = "声呐";
+                label_sel_radartype.Text = "声呐主动";
                 groupBox1.Visible = false;
-                drawtrace();
-                readTxt();
+               // drawtrace();
+            //    readTxt();
 
             }
             if (radioButton5.Checked == true)  //选中了第5个单选按钮，即选择了电子对抗
             {
-
-                //  button_goback.Visible = true;
-                //pictureBox4.Image = Bitmap.FromFile(AppDomain.CurrentDomain.BaseDirectory + "\..\\..\\..\\radarsystem\\Resources\\多普勒雷达.jpg");
                 pictureBox4.BackgroundImage = global::radarsystem.Properties.Resources.radarpic;  //还没替换为多基地雷达图标
                 pictureBox4.Visible = true;
                 buttonDectecModeling.Visible = true;
                 label_sel_radartype.Visible = true;
                 label_sel_radartype.Text = "电子对抗";
                 groupBox1.Visible = false;
-                drawtrace();
-                readTxt();
+               // drawtrace();
+            //    readTxt();
 
             }
             if (radioButton6.Checked == true)  //选中了第6个单选按钮，即选择了指挥控制
-            {
-
-                //  button_goback.Visible = true;
-                //pictureBox4.Image = Bitmap.FromFile(AppDomain.CurrentDomain.BaseDirectory + "\..\\..\\..\\radarsystem\\Resources\\多普勒雷达.jpg");
+            {         
                 pictureBox4.BackgroundImage = global::radarsystem.Properties.Resources.radarpic; 
                 //还没替换为指挥控制雷达图标，2部雷达？
                 pictureBox4.Visible = true;
@@ -665,13 +585,62 @@ namespace radarsystem
                 label_sel_radartype.Visible = true;
                 label_sel_radartype.Text = "指挥控制";
                 groupBox1.Visible = false;
-                drawtrace();
-                readTxt();
+              //  drawtrace();
+           //     readTxt();
+
+            }
+            if (radioButton13.Checked == true)  //选中了第7个单选按钮，即选择了声呐（被动）
+            {                             
+                buttonDectecModeling.Visible = true;
+                label_sel_radartype.Visible = true;
+                label_sel_radartype.Text = "声呐被动";
+                groupBox1.Visible = false;
+                // drawtrace();
+             //   readTxt();
 
             }
             button_goback.Visible = true;
         }
         
+        private void read_interface(int line_num)       //读配置文件公共接口
+        {
+            String path = Application.StartupPath + "\\configure.txt";
+         //   StreamReader sr = new StreamReader(path, Encoding.Default);
+            string[] content_read = System.IO.File.ReadAllText(path).Split(new char[] { '\r', '\n' },
+               StringSplitOptions.RemoveEmptyEntries);
+            int count = 1;
+            int line_count = 0;
+            while (count < 9)
+            {
+                textBox_doppler.Text += content_read[line_num * 10 + count].Split('\t')[0];
+                textBox_doppler.Text += "\r\n\r\n";
+                if ((line_count+1) % 3 == 0)
+                {
+                    textBox_doppler.Text += "\r\n"; //多加一个换行，保持美观
+                    //line_count = 0;
+                }
+                if(line_count==4)
+                    textBox_doppler.Text += "\r\n"; //多加一个换行，保持美观
+                if (count == 1)
+                    textBox_juli.Text = content_read[line_num * 10 + count].Split('\t')[1];
+                else if (count == 2)
+                    textBox_zaipin.Text = content_read[line_num * 10 + count].Split('\t')[1];
+                else if (count == 3)
+                    textBox_chongpin.Text = content_read[line_num * 10 + count].Split('\t')[1];
+                else if (count == 4)
+                    textBox_maikuan.Text = content_read[line_num * 10 + count].Split('\t')[1];
+                else if (count == 5)
+                    textBox_maifu.Text = content_read[line_num * 10 + count].Split('\t')[1];
+                else if (count == 6)
+                    textBox_saomiao.Text = content_read[line_num * 10 + count].Split('\t')[1];
+                else if (count == 7)
+                    textBox_jiebianliang.Text = content_read[line_num * 10 + count].Split('\t')[1];
+                else if (count == 8)
+                    textBox_doudongliang.Text = content_read[line_num * 10 + count].Split('\t')[1];
+                count++;
+                line_count++;
+            }
+        }
         private void readTxt()
         {
             textBox_doppler.Visible = true;
@@ -679,137 +648,92 @@ namespace radarsystem
             //string str_temp="";
             textBox_doppler.Text = "";
            // textBox_doppler.Text = "检测范围\r\n\r\n距离精度\r\n\r\n目标速度\r\n\r\n速度精度";
-            String path = Application.StartupPath+"\\configure.txt";
-            StreamReader sr = new StreamReader(path, Encoding.Default);
-            String line;
-            while ((line = sr.ReadLine()) != null )
+          
+            int line_num = 0;
+            int count = 0;
+            if (radioButton1.Checked == true)
             {
-              //  Console.WriteLine(line.ToString());
-                if (radioButton1.Checked == true)
-                {
-                    if (line.ToString() == "多普勒雷达")
-                    {                      
-                        while((line=sr.ReadLine())!=null)
-                        {
-                            textBox_doppler.Text += line.ToString();
-                            textBox_doppler.Text += "\r\n";
-                            if(line.ToString()!="" &&line.Substring(0,5)=="-----")  //内层循环终止条件
-                            {
-                                break;
-                            }
-                            
-                        }
-                        break;  //外层循环终止
-                    }
-                   
-                  
-                }
-                else if (radioButton2.Checked == true)
-                {
-                    if (line.ToString() == "多基地雷达")
-                    {
-                        while ((line = sr.ReadLine()) != null)
-                        {
-                            textBox_doppler.Text += line.ToString();
-                            textBox_doppler.Text += "\r\n";
-                            if (line.ToString() != "" && line.Substring(0, 5) == "-----")  //内层循环终止条件
-                            {
-                                break;
-                            }
-
-                        }
-                        break;  //外层循环终止
-                    }
-                  
-
-                }
-                else if (radioButton3.Checked == true)
-                {
-                    if (line.ToString() == "超视距雷达")
-                    {
-                        while ((line = sr.ReadLine()) != null)
-                        {
-                            textBox_doppler.Text += line.ToString();
-                            textBox_doppler.Text += "\r\n";
-                            if (line.ToString() != "" && line.Substring(0, 5) == "-----")  //内层循环终止条件
-                            {
-                                break;
-                            }
-
-                        }
-                        break;  //外层循环终止
-                    }
+                line_num = 0;
+                read_interface(line_num);
+               // count = 1;
+               // if (content_read[line_num * 1] == "多普勒雷达")
+               // {           
                     
+               // }
 
-                }
-                else if (radioButton4.Checked == true)
-                {
-                    if (line.ToString() == "声呐")
-                    {
-                        while ((line = sr.ReadLine()) != null)
-                        {
-                            textBox_doppler.Text += line.ToString();
-                            textBox_doppler.Text += "\r\n";
-                            if (line.ToString() != "" && line.Substring(0, 5) == "-----")  //内层循环终止条件
-                            {
-                                break;
-                            }
-
-                        }
-                        break;  //外层循环终止
-                    }
-                
-
-                }
-                else if (radioButton5.Checked == true)
-                {
-                    if (line.ToString() == "电子对抗")
-                    {
-                        while ((line = sr.ReadLine()) != null)
-                        {
-                            textBox_doppler.Text += line.ToString();
-                            textBox_doppler.Text += "\r\n";
-                            if (line.ToString() != "" && line.Substring(0, 5) == "-----")  //内层循环终止条件
-                            {
-                                break;
-                            }
-
-                        }
-                        break;  //外层循环终止
-                    }
-                    
-
-                }
-                else if(radioButton6.Checked == true)
-                {
-                    if (line.ToString() == "指挥控制")
-                    {
-                        while ((line = sr.ReadLine()) != null)
-                        {
-                            textBox_doppler.Text += line.ToString();
-                            textBox_doppler.Text += "\r\n";
-                            if (line.ToString() != "" && line.Substring(0, 5) == "-----")  //内层循环终止条件
-                            {
-                                break;
-                            }
-
-                        }
-                        break;  //外层循环终止
-                    }
-                    
-
-                }
             }
-            sr.Close();
+            if (radioButton2.Checked == true)
+            {
+                line_num = 1;
+                read_interface(line_num);
+            }
+            if (radioButton3.Checked == true)
+            {
+                line_num = 2;
+                read_interface(line_num);
+            }
+              
+          
+   
         }
 
-        private void OnButtonUpdateConfigClick(object sender, EventArgs e)  //更新配置文件响应事件
+        private void OnButtonUpdateConfigClick(object sender, EventArgs e)  //选择文件更新 按钮响应事件
+        {         
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.InitialDirectory = "E:\\";
+                openFileDialog.Filter = "文本文件(*.txt)|*.txt|所有文件(*.*)|*.*";
+                openFileDialog.RestoreDirectory = true;
+                openFileDialog.FilterIndex = 1;
+                string path = "";
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    path = openFileDialog.FileName;
+                }
+                if(path!="")
+                    System.Diagnostics.Process.Start(path);
+           // }
+            
+        }
+
+        private void wrTxt()
         {
-            readTxt();
-        }
+          //  MessageBox.Show("wr");
+            int line_num=0; //行号
+            String path = Application.StartupPath + "\\configure.txt";
+            
+            string[] content = System.IO.File.ReadAllText(path).Split(new char[] { '\r', '\n' },
+                StringSplitOptions.RemoveEmptyEntries);
 
+            if (radioButton1.Checked == true)   //多普勒雷达被选中
+            {
+                line_num = 0;  //指定修改哪些行，最后一次整个文件都会更新
+                content[line_num* 1 + 1] = "探测距离(km)"+"\t"+textBox_juli.Text;
+                content[line_num * 1 + 2] = "载频(GHZ)"+"\t"+textBox_zaipin.Text;
+                content[line_num * 1 + 3] = "重频(GHZ)" + "\t" + textBox_chongpin.Text;
+                content[line_num * 1 + 4] = "脉宽(us)" + "\t" + textBox_maikuan.Text;
+                content[line_num * 1 + 5] = "脉幅" + "\t" + textBox_maifu.Text;
+                content[line_num * 1 + 6] = "天线扫描周期" + "\t" + textBox_saomiao.Text;
+                content[line_num * 1 + 7] = "载频捷变量" + "\t" + textBox_jiebianliang.Text;
+                content[line_num * 1 + 8] = "重频抖动量" + "\t" + textBox_doudongliang.Text;
+            }
+            //content[1] = "9,f,g,h";
+            System.IO.File.WriteAllText(path, string.Join("\r\n", content),
+                Encoding.Unicode);
+
+        }
         private void OnButtonDetectModeling(object sender, EventArgs e)  //探测建模按钮响应事件
         {
+
+            textBox_juli.Visible = false;
+            textBox_zaipin.Visible = false;
+            textBox_chongpin.Visible = false;
+            textBox_maikuan.Visible = false;
+            textBox_maifu.Visible = false;
+            textBox_saomiao.Visible = false;
+            textBox_jiebianliang.Visible = false;
+            textBox_doudongliang.Visible = false;
+            button_text_update.Visible = false;
+
             if (radioButton6.Checked == false)  //不是指挥控制
             {
                 groupBox1.Visible = false;
@@ -890,6 +814,46 @@ namespace radarsystem
                 draw_monitor_trace(list);
                 MessageBox.Show("选中真实轨迹");
             }
+        }
+
+        private void comboBox_ToolList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            axMap1.CurrentTool = (MapXLib.ToolConstants)comboBox_ToolList.SelectedItem;
+        }
+
+        private void TextChanged(object sender, EventArgs e)
+        {
+            flag_editchange = true;
+        }
+
+        private void UpdateTextToTxt(object sender, EventArgs e)
+        {
+            wrTxt();
+            readTxt();
+            MessageBox.Show("配置文件更新完成");
+        }
+
+        private void Text_jinduAndweiduChanged(object sender, EventArgs e)
+        {
+            double MapX=0,MapY=0;
+            if(textBox_longitude.Text!="")
+                   MapX = Convert.ToDouble(textBox_longitude.Text);  //经度
+
+            if(textBox_latitude.Text!="")
+                   MapY = Convert.ToDouble(textBox_latitude.Text);  //纬度
+            float screenX = 0, screenY = 0; //屏幕坐标
+
+            if (textBox_longitude.Text != "" && textBox_latitude.Text != "")
+            {
+
+
+                axMap1.ConvertCoord(ref screenX, ref screenY, ref MapX, ref MapY,
+                                MapXLib.ConversionConstants.miMapToScreen);  //已知经纬度 转换为屏幕坐标
+                pictureBox4.Left = (int)screenX;
+                pictureBox4.Top = (int)screenY;
+            }
+        //    Graphics g = axMap1.CreateGraphics();
+          
         }
       
     }
