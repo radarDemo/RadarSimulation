@@ -32,11 +32,11 @@ namespace radarsystem
                 double randStdNormal = Math.Sqrt(-2.0*Math.Log(factor1))*Math.Sin(2.0*Math.PI*factor2);
                 //rand normal(mean,variance^2)
                 double randNormal = mean+variance*randStdNormal;
-                noisePoint[i].X = points[i].X + randNormal;
-                noisePoint[i].Y = points[i].Y + randNormal;
+                noisePoint[i].X = points[i].X + 20*randNormal;
+                noisePoint[i].Y = points[i].Y + 20*randNormal;
 
             }
-
+             
            return noisePoint;
         }
 
@@ -72,6 +72,25 @@ namespace radarsystem
 
             }
                 return noisePoint;
+        }
+
+        /// <summary>
+        /// 给轨迹点添加均匀噪音
+        /// </summary>
+        /// <param name="points">原始轨迹点</param>
+        /// <returns>添加噪音后的轨迹点</returns>
+        public static PointD[] addUniformNoise(PointD[] points)
+        {
+            PointD[] noisePoint = new PointD[points.Length];
+
+            for (int i = 0; i < points.Length; i++)
+            {
+                noisePoint[i] = new PointD();
+                noisePoint[i].X = points[i].X + GetUniform()*20;
+                noisePoint[i].Y = points[i].Y + GetUniform()*20;
+            }
+
+            return noisePoint;
         }
 
         //得到泊松分布的一个随机值

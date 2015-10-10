@@ -5,6 +5,9 @@ using System.Text;
 
 namespace radarsystem
 {
+    /// <summary>
+    /// 将轨迹点坐标转换成复数，进行傅立叶变换
+    /// </summary>
     public class Complex
     {
         //实部与虚部定义

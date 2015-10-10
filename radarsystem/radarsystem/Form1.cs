@@ -25,6 +25,7 @@ namespace radarsystem
         //存储添加噪音后的轨迹点
         List<PointD> guassianList ;
         List<PointD> poissonList;
+        List<PointD> uniformList;
 
         //数据库操作
         DBInterface dbInterface = new DBInterface();
@@ -234,6 +235,7 @@ namespace radarsystem
         //    textBox_longitude.Text = dis.ToString();
         }
          
+        //
         private void button_goback_Click(object sender, EventArgs e)
         {
            // label_sel_radartype.Text = "雷达类型选择";
@@ -269,7 +271,7 @@ namespace radarsystem
         }
 
        
-
+        //特性分析中下拉框状态改变响应函数
         private void featurecomboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             
@@ -281,11 +283,13 @@ namespace radarsystem
                 return;
             if (showIndex == 0)
             {
-                //当前选中了时域和空域特征分析
+                //当前选中了时域和空域特征分析(X)
                 if (noiseFlag == NoiseEnum.GUASSIAN)
-                    featDic = feature.getTimeAndSpaceFeature(guassianList, 13);
+                    featDic = feature.getTimeAndSpaceFeatureX(guassianList, 13);
+                else if(noiseFlag == NoiseEnum.POISSON)
+                    featDic = feature.getTimeAndSpaceFeatureX(poissonList, 13);
                 else
-                    featDic = feature.getTimeAndSpaceFeature(poissonList, 13);
+                    featDic = feature.getTimeAndSpaceFeatureX(uniformList, 13);
                 String[] featName = new String[13];
                 int i = 0;
                 foreach (String key in featDic.Keys)
@@ -324,13 +328,60 @@ namespace radarsystem
 
 
             }
-            else if(showIndex == 1)
+            else if (showIndex == 1)
+            {
+                //当前选中了时域和空域特征分析(Y)
+                if (noiseFlag == NoiseEnum.GUASSIAN)
+                    featDic = feature.getTimeAndSpaceFeatureY(guassianList, 13);
+                else if (noiseFlag == NoiseEnum.POISSON)
+                    featDic = feature.getTimeAndSpaceFeatureY(poissonList, 13);
+                else
+                    featDic = feature.getTimeAndSpaceFeatureY(uniformList, 13);
+                String[] featName = new String[13];
+                int i = 0;
+                foreach (String key in featDic.Keys)
+                {
+                    featName[i++] = key;
+                }
+
+                featurelistView.BeginUpdate();
+
+
+                featurelistView.Clear();
+                ColumnHeader header1 = new ColumnHeader();
+                header1.Text = "算法";
+                header1.Width = 95;
+                ColumnHeader header2 = new ColumnHeader();
+                header2.Text = "数值分析";
+                header2.Width = 100;
+
+                featurelistView.Columns.AddRange(new ColumnHeader[] { header1, header2 });
+                featurelistView.FullRowSelect = true;
+                //listview 中添加数据
+
+                for (i = 0; i < 13; i++)
+                {
+                    featurelistView.Items.Add("" + featName[i]);
+                    ListViewItem listItem = new ListViewItem();
+                    listItem.SubItems.Add("" + featDic[featName[i]]);
+                    featurelistView.Items[i].SubItems.Add("" + featDic[featName[i]]);
+
+
+                }
+
+                featurelistView.View = System.Windows.Forms.View.Details;
+                featurelistView.GridLines = true;
+                featurelistView.EndUpdate();
+
+            }
+            else if(showIndex == 2)
             {
                 //当前选中了频域特征分析
                MessageBox.Show("频域特征分析未实现", "hints");
             }
         }
 
+        //画特性分析中间面板的坐标和圆
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
             
@@ -422,11 +473,15 @@ namespace radarsystem
                     //显示添加高斯噪音的轨迹
                     draw_monitor_trace(guassianList);
                 }
-                else if(noiseFlag == NoiseEnum.POISSON)
+                else if (noiseFlag == NoiseEnum.POISSON)
                 {
                     //显示添加泊松噪音的轨迹
                     draw_monitor_trace(poissonList);
 
+                }
+                else if (noiseFlag == NoiseEnum.UNIFORM)
+                {
+                    draw_monitor_trace(uniformList);
                 }
                 else
                 {
@@ -762,7 +817,7 @@ namespace radarsystem
         {
             if (radioButton7.Checked == true)
             {
-                //添加白噪声N(0,1)
+                //添加高斯噪声
                 guassianList = new List<PointD>(Noise.addGuassianNoise(list.ToArray(), (double)0, (double)1));
                 button_goback.Enabled = true;
                if(DialogResult.OK == MessageBox.Show("congratulations! 添加噪声完毕，你选择添加了高斯白噪声"))
@@ -779,6 +834,7 @@ namespace radarsystem
             {
                 //添加泊松噪音
                 poissonList = new List<PointD>(Noise.addPoissonNoise(list.ToArray(), (panel1.Width / 10)*7 , (panel1.Width / 10)*7));
+                button_goback.Enabled = true;
                 if (DialogResult.OK == MessageBox.Show("congratulations! 添加噪声完毕，你选择添加了泊松噪声"))
                 {
                     //MessageBox.Show(""+(panel1.Width / 10) * 7);
@@ -788,12 +844,19 @@ namespace radarsystem
                     
                 }
                     
-                button_goback.Enabled = true;
+                //button_goback.Enabled = true;
             }
             else if (radioButton9.Checked == true)
             {
-                MessageBox.Show("congratulations! 添加噪声完毕，你选择添加了平均噪声");
+                //添加均匀噪声
+                uniformList = new List<PointD>(Noise.addUniformNoise(list.ToArray()));
                 button_goback.Enabled = true;
+                if (DialogResult.OK == MessageBox.Show("congratulations! 添加噪声完毕，你选择添加了平均噪声"))
+                {
+                    noiseFlag = NoiseEnum.UNIFORM;
+                    this.tabControl1.SelectedIndex = 1;
+                }
+                //button_goback.Enabled = true;
             }
             else
                 MessageBox.Show("请选择添加一种噪声");

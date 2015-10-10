@@ -15,6 +15,12 @@ namespace radarsystem
     {
         NoNoise = -1,
         GUASSIAN=0,
-        POISSON=1
+        POISSON=1,
+        UNIFORM=2
+    }
+    public enum Coordinate
+    {
+        X=0,
+        Y=1
     }
 }
