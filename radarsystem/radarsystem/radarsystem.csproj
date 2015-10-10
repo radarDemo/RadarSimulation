@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="Complex.cs" />
     <Compile Include="Constant.cs" />
+    <Compile Include="DBInterface.cs" />
     <Compile Include="FeatureModel.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>

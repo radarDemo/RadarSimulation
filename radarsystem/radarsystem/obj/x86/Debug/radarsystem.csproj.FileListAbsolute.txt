@@ -63,3 +63,16 @@ C:\Users\Administrator\Desktop\10-9\RadarSimulation\radarsystem\radarsystem\obj\
 C:\Users\Administrator\Desktop\10-9\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.Form1.resources
 C:\Users\Administrator\Desktop\10-9\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.Properties.Resources.resources
 C:\Users\Administrator\Desktop\10-9\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.csproj.GenerateResource.Cache
+C:\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\Interop.MapXLib.dll
+C:\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\AxInterop.MapXLib.dll
+C:\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.csproj.ResolveComReference.cache
+C:\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.exe
+C:\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.pdb
+C:\RadarSimulation\radarsystem\radarsystem\bin\x86\Debug\radarsystem.exe
+C:\RadarSimulation\radarsystem\radarsystem\bin\x86\Debug\radarsystem.pdb
+C:\RadarSimulation\radarsystem\radarsystem\bin\x86\Debug\Interop.MapXLib.dll
+C:\RadarSimulation\radarsystem\radarsystem\bin\x86\Debug\AxInterop.MapXLib.dll
+C:\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.csprojResolveAssemblyReference.cache
+C:\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.Form1.resources
+C:\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.Properties.Resources.resources
+C:\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.csproj.GenerateResource.Cache

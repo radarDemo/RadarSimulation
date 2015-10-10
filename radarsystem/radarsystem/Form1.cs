@@ -26,6 +26,9 @@ namespace radarsystem
         List<PointD> guassianList ;
         List<PointD> poissonList;
 
+        //数据库操作
+        DBInterface dbInterface = new DBInterface();
+
         //标识是否添加了噪音
         NoiseEnum noiseFlag = NoiseEnum.NoNoise;
 
@@ -78,13 +81,10 @@ namespace radarsystem
         private void Form1_Load(object sender, EventArgs e)
         {
             //连接数据库
-            string ConStr = string.Format(@"Provider=Microsoft.Jet.OLEDB.4.0;
-                            Data source="+Application.StartupPath+"\\database\\whut\\RecognitionAid.mdb");
-            //MessageBox.Show(ConStr);
-            OleDbConnection oleCon = new OleDbConnection(ConStr);
-            OleDbDataAdapter oleDap = new OleDbDataAdapter("select * from TargetTrailPoints", oleCon);
-            DataSet ds = new DataSet();
-            oleDap.Fill(ds, "目标轨迹");
+            string conStr = string.Format(@"Provider=Microsoft.Jet.OLEDB.4.0;
+                            Data source=" + Application.StartupPath + "\\database\\whut\\RecognitionAid.mdb");
+
+            DataSet ds = dbInterface.query(conStr, "select * from TargetTrailPoints", "目标轨迹");
            
             for (int i = 0; i < ds.Tables[0].Rows.Count; i++)          //循环取出ds.table中的值
             {
@@ -117,11 +117,6 @@ namespace radarsystem
             screenpoint_pic4 =PointToScreen(pictureBox4.Location);
             Console.WriteLine(screenpoint_pic4.X);
             Console.WriteLine(screenpoint_pic4.Y);
-          //  list.ForEach()
-            //     ds.
-            // this.dataGridView1.DataSource = ds.Tables[0].DefaultView;
-            oleCon.Close();
-            oleCon.Dispose();
 
         }
         private void drawtrace()
@@ -162,9 +157,7 @@ namespace radarsystem
                 g.DrawLine(p, one, two);
                 System.Threading.Thread.Sleep(200);
             }
-            //for(int pos=0;pos<list.Count;pos++)
-            //{
-            //}
+          
             g.Dispose();
         }
         private void draw_monitor_trace(List<PointD> points)
