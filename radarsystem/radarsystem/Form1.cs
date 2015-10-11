@@ -16,10 +16,19 @@ namespace radarsystem
 {
     public partial class Form1 : Form
     {
-      
+        //多目标轨迹
+        public struct trace
+        {
+            public long tar_ID;
+            public long track_ID;
+            public Point trail_Point;
+            public long time;
+        };
+        List<Point>[] list_trace = new List<Point>[50];
+        List<PointD>[] list = new List<PointD>[50];
 
-        List<PointD> list = new List<PointD>();
-        List<Point> list_trace = new List<Point>();
+        //List<PointD> list = new List<PointD>();
+        //List<Point> list_trace = new List<Point>();
         ArrayList arr_tar=new ArrayList() ;  //目标ID数组
    
         //存储添加噪音后的轨迹点
@@ -37,11 +46,11 @@ namespace radarsystem
         private bool isDragging = false; //拖中
         private int currentX = 0, currentY = 0; //原来鼠标X,Y坐标
         bool flag_thread2 = false;
-        bool flag_thread1 = false;
+        //bool flag_thread1 = false;
         bool flag_editchange = false;  //对应的配置文件文本框内容发生改变
         bool flag_init_editchange = false; //第一次加载时候，文本框内容会发生改变
         Thread t2;
-        Thread t1;
+        //Thread t1;
      //用pictureBox4 的左上角坐标表示雷达的中心点坐标
    
       
@@ -82,110 +91,152 @@ namespace radarsystem
         private void Form1_Load(object sender, EventArgs e)
         {
             //连接数据库
+            long id, tar_ID;
+            int index;
             string conStr = string.Format(@"Provider=Microsoft.Jet.OLEDB.4.0;
                             Data source=" + Application.StartupPath + "\\database\\whut\\RecognitionAid.mdb");
 
             DataSet ds = dbInterface.query(conStr, "select * from TargetTrailPoints", "目标轨迹");
-           
+
+            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+            {
+                trace s1 = new trace();
+                s1.tar_ID = Convert.ToInt64(ds.Tables[0].Rows[i]["TGT_ID"]);
+                id = s1.tar_ID;
+                if (!arr_tar.Contains(id))
+                    arr_tar.Add(id);
+            }
+            for (int i = 0; i < arr_tar.Count; i++)
+            {
+                list_trace[i] = new List<Point>();
+                list[i] = new List<PointD>();
+            }
+
             for (int i = 0; i < ds.Tables[0].Rows.Count; i++)          //循环取出ds.table中的值
             {
-
-                PointD s = new PointD();                  // 实例化Point对象
-                s.X= Convert.ToDouble(ds.Tables[0].Rows[i]["X"]);
-                s.Y = Convert.ToDouble(ds.Tables[0].Rows[i]["Y"]);            
-
-                list.Add(s);    // 将取出的对象保存在LIST中  以上是获得值。
-
-
+                //trace s = new trace();
+                Point p = new Point();
+                tar_ID = Convert.ToInt64(ds.Tables[0].Rows[i]["TGT_ID"]);
+                //id = s.tar_ID;
+                //s.track_ID = Convert.ToInt64(ds.Tables[0].Rows[i]["TrailID"]);
+                p.X = Convert.ToInt32(ds.Tables[0].Rows[i]["X"]);
+                p.Y = Convert.ToInt32(ds.Tables[0].Rows[i]["Y"]);
+                //s.trail_Point = p;
+                //s.time = Convert.ToInt64(ds.Tables[0].Rows[i]["moveTime"]);
+                index = arr_tar.IndexOf(tar_ID);
+                list_trace[index].Add(p);
             }
             for (int i = 0; i < ds.Tables[0].Rows.Count; i++)          //循环取出ds.table中的值
             {
-
-                Point s = new Point();                  // 实例化Point对象
-                s.X = Convert.ToInt32(ds.Tables[0].Rows[i]["X"]);  //X，Y看做是经度纬度
-                s.Y = Convert.ToInt32(ds.Tables[0].Rows[i]["Y"]);
-
-                list_trace.Add(s);    // 将取出的对象保存在LIST中  以上是获得值。
-
-
+                PointD p = new PointD();
+                tar_ID = Convert.ToInt64(ds.Tables[0].Rows[i]["TGT_ID"]);
+                p.X = Convert.ToDouble(ds.Tables[0].Rows[i]["X"]);
+                p.Y = Convert.ToDouble(ds.Tables[0].Rows[i]["Y"]);
+                index = arr_tar.IndexOf(tar_ID);
+                list[index].Add(p);
             }
-            foreach (Point p in list_trace)
-            {
-                Console.WriteLine(p.X);
+            //for (int i = 0; i < ds.Tables[0].Rows.Count; i++)          //循环取出ds.table中的值
+            //{
+
+            //    PointD s = new PointD();                  // 实例化Point对象
+            //    s.X= Convert.ToDouble(ds.Tables[0].Rows[i]["X"]);
+            //    s.Y = Convert.ToDouble(ds.Tables[0].Rows[i]["Y"]);            
+
+            //    list.Add(s);    // 将取出的对象保存在LIST中  以上是获得值。
+
+
+            //}
+            //for (int i = 0; i < ds.Tables[0].Rows.Count; i++)          //循环取出ds.table中的值
+            //{
+
+            //    Point s = new Point();                  // 实例化Point对象
+            //    s.X = Convert.ToInt32(ds.Tables[0].Rows[i]["X"]);  //X，Y看做是经度纬度
+            //    s.Y = Convert.ToInt32(ds.Tables[0].Rows[i]["Y"]);
+
+            //    list_trace.Add(s);    // 将取出的对象保存在LIST中  以上是获得值。
+
+
+            //}
+            //foreach (Point p in list_trace)
+            //{
+            //    Console.WriteLine(p.X);
              
-                Console.WriteLine(p.Y);
-            }
+            //    Console.WriteLine(p.Y);
+            //}
             screenpoint_pic4 =PointToScreen(pictureBox4.Location);
             Console.WriteLine(screenpoint_pic4.X);
             Console.WriteLine(screenpoint_pic4.Y);
 
         }
         private void drawtrace()
-        {          
-            if (!flag_thread1)
-            {             
-                t1 = new Thread(new ThreadStart(TestMethod));
-                t1.IsBackground = true;
-                t1.Start();
-                flag_thread1 = true;
-            }
-            else
-            {
+        {
+            System.Threading.Tasks.Parallel.For(0, arr_tar.Count, i =>
+                {
+                    TestMethod(i);
+                });
+            //if (!flag_thread1)
+            //{             
+            //    t1 = new Thread(new ThreadStart(TestMethod));
+            //    t1.IsBackground = true;
+            //    t1.Start();
+            //    flag_thread1 = true;
+            //}
+            //else
+            //{
 
-                t1.Abort();
-                t1 = new Thread(new ThreadStart(TestMethod));
-                t1.IsBackground = true;
-                t1.Start();
-            }
+            //    t1.Abort();
+            //    t1 = new Thread(new ThreadStart(TestMethod));
+            //    t1.IsBackground = true;
+            //    t1.Start();
+            //}
             //   t2.Start();
 
            
         }
-        public void TestMethod()
+        public void TestMethod(int flag)
         {
             Graphics g;
             
             g =axMap1.CreateGraphics();
-    //        g.s
             Pen p = new Pen(Color.Red, 2);         
            
             Point one, two;
-            for (int i = 0; i < list_trace.Count-1; i++)
+            for (int i = 0; i < list_trace[flag].Count-1; i++)
             {
-                one = list_trace[i];
-                two = list_trace[i + 1];
+                one = list_trace[flag][i];
+                two = list_trace[flag][i + 1];
                 g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
                 g.DrawLine(p, one, two);
                 System.Threading.Thread.Sleep(200);
-            }
-          
+            } 
             g.Dispose();
         }
         private void draw_monitor_trace(List<PointD> points)
-        {             
-            if (!flag_thread2) 
-            {            
-                t2 = new Thread(new ParameterizedThreadStart(thread2));
-                t2.IsBackground = true;
-                t2.Start(points);
-                flag_thread2 = true;
-            }
-            else
-            {
-                
-                t2.Abort();
-                t2 = new Thread(new ParameterizedThreadStart(thread2));
-                t2.IsBackground = true;
-                t2.Start(points);
-            }
-             //   t2.Start();
-
-
+        {
+            System.Threading.Tasks.Parallel.For(0, arr_tar.Count, i =>
+                {
+                    thread2(points);
+                });
+            //if (!flag_thread2) 
+            //{            
+            //    t2 = new Thread(new ParameterizedThreadStart(thread2));
+            //    t2.IsBackground = true;
+            //    t2.Start(points);
+            //    flag_thread2 = true;
+            //}
+            //else
+            //{
+            //    t2.Abort();
+            //    t2 = new Thread(new ParameterizedThreadStart(thread2));
+            //    t2.IsBackground = true;
+            //    t2.Start(points);
+            //}
+            //t2.Start();
         }
-        public void thread2(object o)
+        public void thread2(List<PointD> points)
         {
             
-            List<PointD> points = (List<PointD>)o;
+            //List<PointD> points = (List<PointD>)o;
             List<Point> list_trace = new List<Point>();
             double distance1, distance2;
             distance1 = 7 * panel1.Width / 20;
@@ -225,7 +276,7 @@ namespace radarsystem
                 two.Y = list_trace[i + 1].Y - pictureBox4.Top + cir_Point.Y;
                 g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
                 g.DrawLine(p, one, two);
-                System.Threading.Thread.Sleep(400);
+                System.Threading.Thread.Sleep(200);
             }
             double x1=116.41667;
             double y1 =39.91667;   //beijing经纬度
@@ -464,8 +515,7 @@ namespace radarsystem
                 pictureBox4.Left = pictureBox4.Left + (e.X - currentX);
             }
             isDragging = false;
-            drawtrace();    
-           
+            drawtrace();
         }
 
         private void OnMouseMove(object sender, MouseEventArgs e)
@@ -859,76 +909,92 @@ namespace radarsystem
 
         private void OnButtonModelDone(object sender, EventArgs e)
         {
-            if (radioButton7.Checked == true)
-            {
-                //添加高斯噪声
-                //均值
-                double xMean = 0,xVariance = 0;
-                double yMean = 0, yVariance = 0;
-                //计算均值和方差
-                computeMeanVar(list, out xMean, out xVariance, out yMean, out yVariance);
-                guassianList = new List<PointD>(Noise.addGuassianNoise(list.ToArray(), xMean,xVariance,yMean,yVariance));
-                button_goback.Enabled = true;
-               if(DialogResult.OK == MessageBox.Show("congratulations! 添加噪声完毕，你选择添加了高斯白噪声"))
-               {
-                   noiseFlag = NoiseEnum.GUASSIAN;
-                   //将当前选中的tab页设为特性分析
-                   this.tabControl1.SelectedIndex = 1;
-                   
-               }
-                  
-               
-            }
-            else if (radioButton8.Checked == true)
-            {
-                //添加泊松噪音
-                poissonList = new List<PointD>(Noise.addPoissonNoise(list.ToArray(), (panel1.Width / 10)*7 , (panel1.Width / 10)*7));
-                button_goback.Enabled = true;
-                if (DialogResult.OK == MessageBox.Show("congratulations! 添加噪声完毕，你选择添加了泊松噪声"))
+                if (radioButton7.Checked == true)
                 {
-                    //MessageBox.Show(""+(panel1.Width / 10) * 7);
-                    noiseFlag = NoiseEnum.POISSON;
-                    //将当前的页面切换成特性分析
-                    this.tabControl1.SelectedIndex = 1;
-                    
+                    //添加高斯噪声
+                    //均值
+                    double xMean = 0, xVariance = 0;
+                    double yMean = 0, yVariance = 0;
+                    //计算均值和方差
+                    for (int i = 0; i < arr_tar.Count; i++)
+                    {
+                        computeMeanVar(list[i], out xMean, out xVariance, out yMean, out yVariance);
+                        guassianList = new List<PointD>(Noise.addGuassianNoise(list[i].ToArray(), xMean, xVariance, yMean, yVariance));
+                    }
+                    button_goback.Enabled = true;
+                    if (DialogResult.OK == MessageBox.Show("congratulations! 添加噪声完毕，你选择添加了高斯白噪声"))
+                    {
+                        noiseFlag = NoiseEnum.GUASSIAN;
+                        //将当前选中的tab页设为特性分析
+                        this.tabControl1.SelectedIndex = 1;
+
+                    }
+
+
                 }
-                    
-                //button_goback.Enabled = true;
-            }
-            else if (radioButton9.Checked == true)
-            {
-                //添加均匀噪声
-                //计算均匀分布的a和b
-                double xMean = 0, xVariance = 0;
-                double yMean = 0, yVariance = 0;
-                double XA = 0, XB = 0;
-                double YA = 0, YB = 0;
-                computeMeanVar(list, out xMean, out xVariance, out yMean, out yVariance);
-                XA = xMean - Math.Pow(3, 1 / 2) * Math.Pow(xVariance, 2);
-                XB = xMean + Math.Pow(3, 1 / 2) * Math.Pow(xVariance, 2);
-                YA = yMean - Math.Pow(3, 1 / 2) * Math.Pow(yVariance, 2);
-                YB = yMean + Math.Pow(3, 1 / 2) * Math.Pow(yVariance, 2); 
-                uniformList = new List<PointD>(Noise.addUniformNoise(list.ToArray(),XA,XB,YA,YB));
-                button_goback.Enabled = true;
-                if (DialogResult.OK == MessageBox.Show("congratulations! 添加噪声完毕，你选择添加了平均噪声"))
+                else if (radioButton8.Checked == true)
                 {
-                    noiseFlag = NoiseEnum.UNIFORM;
-                    this.tabControl1.SelectedIndex = 1;
+                    //添加泊松噪音
+                    for (int i = 0; i < arr_tar.Count; i++ )
+                        poissonList = new List<PointD>(Noise.addPoissonNoise(list[i].ToArray(), (panel1.Width / 10) * 7, (panel1.Width / 10) * 7));
+                    button_goback.Enabled = true;
+                    if (DialogResult.OK == MessageBox.Show("congratulations! 添加噪声完毕，你选择添加了泊松噪声"))
+                    {
+                        //MessageBox.Show(""+(panel1.Width / 10) * 7);
+                        noiseFlag = NoiseEnum.POISSON;
+                        //将当前的页面切换成特性分析
+                        this.tabControl1.SelectedIndex = 1;
+
+                    }
+
+                    //button_goback.Enabled = true;
                 }
-                //button_goback.Enabled = true;
-            }
-            else
-                MessageBox.Show("请选择添加一种噪声");
+                else if (radioButton9.Checked == true)
+                {
+                    //添加均匀噪声
+                    //计算均匀分布的a和b
+                    double xMean = 0, xVariance = 0;
+                    double yMean = 0, yVariance = 0;
+                    double XA = 0, XB = 0;
+                    double YA = 0, YB = 0;
+                    for (int i = 0; i < arr_tar.Count; i++)
+                    {
+                        computeMeanVar(list[i], out xMean, out xVariance, out yMean, out yVariance);
+                        XA = xMean - Math.Pow(3, 1 / 2) * Math.Pow(xVariance, 2);
+                        XB = xMean + Math.Pow(3, 1 / 2) * Math.Pow(xVariance, 2);
+                        YA = yMean - Math.Pow(3, 1 / 2) * Math.Pow(yVariance, 2);
+                        YB = yMean + Math.Pow(3, 1 / 2) * Math.Pow(yVariance, 2);
+
+                        uniformList = new List<PointD>(Noise.addUniformNoise(list[i].ToArray(), XA, XB, YA, YB));
+                    }
+                    button_goback.Enabled = true;
+                    if (DialogResult.OK == MessageBox.Show("congratulations! 添加噪声完毕，你选择添加了平均噪声"))
+                    {
+                        noiseFlag = NoiseEnum.UNIFORM;
+                        this.tabControl1.SelectedIndex = 1;
+                    }
+                    //button_goback.Enabled = true;
+                }
+                else
+                    MessageBox.Show("请选择添加一种噪声");
+            
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
+            
             if (this.checkBox1.Checked == true)
             {
-                //如果真是轨迹选项选中
-                draw_monitor_trace(list);
                 MessageBox.Show("选中真实轨迹");
+                //如果真是轨迹选项选中
+                System.Threading.Tasks.Parallel.For(0, arr_tar.Count, i =>
+                {
+                       draw_monitor_trace(list[i]);
+                });
+                
             }
+                
+
         }
 
         private void comboBox_ToolList_SelectedIndexChanged(object sender, EventArgs e)

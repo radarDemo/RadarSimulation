@@ -76,3 +76,21 @@ C:\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.csprojResol
 C:\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.Form1.resources
 C:\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.Properties.Resources.resources
 C:\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.csproj.GenerateResource.Cache
+Z:\共享文件夹\github\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\Interop.MapXLib.dll
+Z:\共享文件夹\github\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\AxInterop.MapXLib.dll
+Z:\共享文件夹\github\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.csproj.ResolveComReference.cache
+Z:\共享文件夹\github\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.exe
+Z:\共享文件夹\github\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.pdb
+Z:\共享文件夹\github\RadarSimulation\radarsystem\radarsystem\bin\x86\Debug\radarsystem.exe
+Z:\共享文件夹\github\RadarSimulation\radarsystem\radarsystem\bin\x86\Debug\radarsystem.pdb
+Z:\共享文件夹\github\RadarSimulation\radarsystem\radarsystem\bin\x86\Debug\Interop.MapXLib.dll
+Z:\共享文件夹\github\RadarSimulation\radarsystem\radarsystem\bin\x86\Debug\AxInterop.MapXLib.dll
+Z:\共享文件夹\github\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.Form1.resources
+Z:\共享文件夹\github\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.Properties.Resources.resources
+Z:\共享文件夹\github\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.csproj.GenerateResource.Cache
+Z:\共享文件夹\github\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Desktop\新建文件夹 (3)\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\Interop.MapXLib.dll
+C:\Users\Administrator\Desktop\新建文件夹 (3)\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\AxInterop.MapXLib.dll
+C:\Users\Administrator\Desktop\新建文件夹 (3)\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.csproj.ResolveComReference.cache
+C:\Users\Administrator\Desktop\新建文件夹 (3)\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.exe
+C:\Users\Administrator\Desktop\新建文件夹 (3)\RadarSimulation\radarsystem\radarsystem\obj\x86\Debug\radarsystem.pdb
