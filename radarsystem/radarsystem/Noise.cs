@@ -18,7 +18,7 @@ namespace radarsystem
         /// <param name="mean">均值</param>
         /// <param name="variance">方差</param>
         /// <returns>添加高斯噪音后的轨迹点</returns>
-        public static PointD[] addGuassianNoise(PointD[] points,double mean,double variance)
+        public static PointD[] addGuassianNoise(PointD[] points,double XMean,double XVariance,double YMean,double YVariance)
         {
             PointD[] noisePoint = new PointD[points.Length];
             //添加高斯噪音，x 和 y
@@ -31,9 +31,10 @@ namespace radarsystem
                 //rand normal(0,1)
                 double randStdNormal = Math.Sqrt(-2.0*Math.Log(factor1))*Math.Sin(2.0*Math.PI*factor2);
                 //rand normal(mean,variance^2)
-                double randNormal = mean+variance*randStdNormal;
-                noisePoint[i].X = points[i].X + 20*randNormal;
-                noisePoint[i].Y = points[i].Y + 20*randNormal;
+                double randNormalX = XMean+XVariance*randStdNormal;
+                double randNormalY = YMean + YVariance * randStdNormal;
+                noisePoint[i].X = points[i].X + randNormalX;
+                noisePoint[i].Y = points[i].Y + randNormalY;
 
             }
              
@@ -79,15 +80,17 @@ namespace radarsystem
         /// </summary>
         /// <param name="points">原始轨迹点</param>
         /// <returns>添加噪音后的轨迹点</returns>
-        public static PointD[] addUniformNoise(PointD[] points)
+        public static PointD[] addUniformNoise(PointD[] points,double XA,double XB,double YA,double YB)
         {
             PointD[] noisePoint = new PointD[points.Length];
-
+            Random r;
             for (int i = 0; i < points.Length; i++)
             {
+                r = new Random();
+                
                 noisePoint[i] = new PointD();
-                noisePoint[i].X = points[i].X + GetUniform()*20;
-                noisePoint[i].Y = points[i].Y + GetUniform()*20;
+                noisePoint[i].X = points[i].X + r.Next((int)XA,(int)XB);
+                noisePoint[i].Y = points[i].Y + r.Next((int)YA,(int)YB);
             }
 
             return noisePoint;

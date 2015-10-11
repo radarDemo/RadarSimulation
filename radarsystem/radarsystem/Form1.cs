@@ -277,22 +277,31 @@ namespace radarsystem
             
             int showIndex = featurecomboBox1.SelectedIndex;
             FeatureModel feature = new FeatureModel();
-            Dictionary<String, double> featDic;
+            Dictionary<String, double> featDicX;
+            Dictionary<String, double> featDicY; 
 
             if (noiseFlag == NoiseEnum.NoNoise)
                 return;
             if (showIndex == 0)
             {
                 //当前选中了时域和空域特征分析(X)
-                if (noiseFlag == NoiseEnum.GUASSIAN)
-                    featDic = feature.getTimeAndSpaceFeatureX(guassianList, 13);
-                else if(noiseFlag == NoiseEnum.POISSON)
-                    featDic = feature.getTimeAndSpaceFeatureX(poissonList, 13);
-                else
-                    featDic = feature.getTimeAndSpaceFeatureX(uniformList, 13);
+                if (noiseFlag == NoiseEnum.GUASSIAN){
+                    featDicX = feature.getTimeAndSpaceFeatureX(guassianList, 13);
+                    featDicY = feature.getTimeAndSpaceFeatureY(guassianList, 13);
+                } 
+                else if(noiseFlag == NoiseEnum.POISSON){
+                    featDicX = feature.getTimeAndSpaceFeatureX(poissonList, 13);
+                    featDicY = feature.getTimeAndSpaceFeatureY(uniformList, 13);
+                }
+                   
+                else{
+                    featDicX = feature.getTimeAndSpaceFeatureX(uniformList, 13);
+                    featDicY = feature.getTimeAndSpaceFeatureY(uniformList, 13);
+                }
+                   
                 String[] featName = new String[13];
                 int i = 0;
-                foreach (String key in featDic.Keys)
+                foreach (String key in featDicX.Keys)
                 {
                     featName[i++] = key;
                 }
@@ -302,23 +311,32 @@ namespace radarsystem
                 
                 featurelistView.Clear();
                 ColumnHeader header1 = new ColumnHeader();
-                header1.Text = "算法";
-                header1.Width = 95;
+                header1.Text = " ";
+                header1.Width = 85;
                 ColumnHeader header2 = new ColumnHeader();
-                header2.Text = "数值分析";
-                header2.Width = 100;
+                header2.Text = "X";
+                header2.Width = 90;
+                ColumnHeader header3 = new ColumnHeader();
+                header3.Text = "Y";
+                header3.Width = 90;
 
-                featurelistView.Columns.AddRange(new ColumnHeader[] { header1, header2 });
+                featurelistView.Columns.AddRange(new ColumnHeader[] { header1, header2, header3 });
                 featurelistView.FullRowSelect = true;
                 //listview 中添加数据
-
+                //featurelistView.Items.Add(" ");
+                featurelistView.Items.Add("算法");
+               
+                //listItem.SubItems.Add("数值分析");
+                featurelistView.Items[0].SubItems.Add("数值分析");
+                featurelistView.Items[0].SubItems.Add("数值分析");
+                ListViewItem listItem = new ListViewItem();
                 for (i = 0; i < 13; i++)
                 {
                     featurelistView.Items.Add("" + featName[i]);
-                    ListViewItem listItem = new ListViewItem();
-                    listItem.SubItems.Add(""+featDic[featName[i]]);
-                    featurelistView.Items[i].SubItems.Add("" + featDic[featName[i]]);
-                    
+                    //ListViewItem listItem = new ListViewItem();
+                    //listItem.SubItems.Add(""+featDic[featName[i]]);
+                    featurelistView.Items[i+1].SubItems.Add("" + featDicX[featName[i]]);
+                    featurelistView.Items[i + 1].SubItems.Add("" + featDicY[featName[i]]);
 
                 }
 
@@ -331,7 +349,7 @@ namespace radarsystem
             else if (showIndex == 1)
             {
                 //当前选中了时域和空域特征分析(Y)
-                if (noiseFlag == NoiseEnum.GUASSIAN)
+            /*    if (noiseFlag == NoiseEnum.GUASSIAN)
                     featDic = feature.getTimeAndSpaceFeatureY(guassianList, 13);
                 else if (noiseFlag == NoiseEnum.POISSON)
                     featDic = feature.getTimeAndSpaceFeatureY(poissonList, 13);
@@ -372,6 +390,7 @@ namespace radarsystem
                 featurelistView.View = System.Windows.Forms.View.Details;
                 featurelistView.GridLines = true;
                 featurelistView.EndUpdate();
+             */
 
             }
             else if(showIndex == 2)
@@ -813,12 +832,42 @@ namespace radarsystem
             }
         }
 
+        public void computeMeanVar(List<PointD> list, out double xMean, out double xVariance, out double yMean, out double yVariance)
+        {
+            xMean = 0.0; xVariance = 0.0;
+            yMean = 0.0; yVariance = 0.0;
+            for (int i = 0; i < list.Count; i++)
+            {
+                xMean += list[i].X;
+                yMean += list[i].Y;
+
+            }
+
+            xMean /= list.Count;
+            yMean /= list.Count;
+            //方差
+            for (int j = 0; j < list.Count; j++)
+            {
+                xVariance += Math.Pow((list[j].X - xMean), 2);
+                yVariance += Math.Pow((list[j].Y - yMean), 2);
+            }
+            xVariance /= list.Count;
+            xVariance = Math.Pow(xVariance, 1 / 2);
+            yVariance /= list.Count;
+            yVariance = Math.Pow(yVariance, 1 / 2);
+        }
+
         private void OnButtonModelDone(object sender, EventArgs e)
         {
             if (radioButton7.Checked == true)
             {
                 //添加高斯噪声
-                guassianList = new List<PointD>(Noise.addGuassianNoise(list.ToArray(), (double)0, (double)1));
+                //均值
+                double xMean = 0,xVariance = 0;
+                double yMean = 0, yVariance = 0;
+                //计算均值和方差
+                computeMeanVar(list, out xMean, out xVariance, out yMean, out yVariance);
+                guassianList = new List<PointD>(Noise.addGuassianNoise(list.ToArray(), xMean,xVariance,yMean,yVariance));
                 button_goback.Enabled = true;
                if(DialogResult.OK == MessageBox.Show("congratulations! 添加噪声完毕，你选择添加了高斯白噪声"))
                {
@@ -849,7 +898,17 @@ namespace radarsystem
             else if (radioButton9.Checked == true)
             {
                 //添加均匀噪声
-                uniformList = new List<PointD>(Noise.addUniformNoise(list.ToArray()));
+                //计算均匀分布的a和b
+                double xMean = 0, xVariance = 0;
+                double yMean = 0, yVariance = 0;
+                double XA = 0, XB = 0;
+                double YA = 0, YB = 0;
+                computeMeanVar(list, out xMean, out xVariance, out yMean, out yVariance);
+                XA = xMean - Math.Pow(3, 1 / 2) * Math.Pow(xVariance, 2);
+                XB = xMean + Math.Pow(3, 1 / 2) * Math.Pow(xVariance, 2);
+                YA = yMean - Math.Pow(3, 1 / 2) * Math.Pow(yVariance, 2);
+                YB = yMean + Math.Pow(3, 1 / 2) * Math.Pow(yVariance, 2); 
+                uniformList = new List<PointD>(Noise.addUniformNoise(list.ToArray(),XA,XB,YA,YB));
                 button_goback.Enabled = true;
                 if (DialogResult.OK == MessageBox.Show("congratulations! 添加噪声完毕，你选择添加了平均噪声"))
                 {

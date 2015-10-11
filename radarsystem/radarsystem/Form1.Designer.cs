@@ -43,6 +43,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.featurecomboBox1 = new System.Windows.Forms.ComboBox();
             this.tbp_SceneSet = new System.Windows.Forms.TabPage();
+            this.label3 = new System.Windows.Forms.Label();
+            this.textBox_latitude = new System.Windows.Forms.TextBox();
             this.button_text_update = new System.Windows.Forms.Button();
             this.textBox_jiebianliang = new System.Windows.Forms.TextBox();
             this.textBox_doudongliang = new System.Windows.Forms.TextBox();
@@ -81,8 +83,7 @@
             this.axMap1 = new AxMapXLib.AxMap();
             this.textBox_doppler = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.textBox_latitude = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tbp_CharacterAnalysis.SuspendLayout();
@@ -116,6 +117,7 @@
             // 
             // tbp_CharacterAnalysis
             // 
+            this.tbp_CharacterAnalysis.Controls.Add(this.label4);
             this.tbp_CharacterAnalysis.Controls.Add(this.Ypanel);
             this.tbp_CharacterAnalysis.Controls.Add(this.Xpanel);
             this.tbp_CharacterAnalysis.Controls.Add(this.panel2);
@@ -182,9 +184,9 @@
             this.featurelistView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.algorithmcolumn,
             this.numbercolumn});
-            this.featurelistView.Location = new System.Drawing.Point(607, 76);
+            this.featurelistView.Location = new System.Drawing.Point(607, 94);
             this.featurelistView.Name = "featurelistView";
-            this.featurelistView.Size = new System.Drawing.Size(167, 389);
+            this.featurelistView.Size = new System.Drawing.Size(233, 389);
             this.featurelistView.TabIndex = 3;
             this.featurelistView.UseCompatibleStateImageBehavior = false;
             // 
@@ -205,7 +207,7 @@
             "时域和空域的特征分析(X)",
             "时域和空域的特征分析(Y)",
             "频域特征分析"});
-            this.featurecomboBox1.Location = new System.Drawing.Point(607, 49);
+            this.featurecomboBox1.Location = new System.Drawing.Point(607, 38);
             this.featurecomboBox1.Name = "featurecomboBox1";
             this.featurecomboBox1.Size = new System.Drawing.Size(167, 20);
             this.featurecomboBox1.TabIndex = 2;
@@ -244,6 +246,23 @@
             this.tbp_SceneSet.TabIndex = 0;
             this.tbp_SceneSet.Text = "岸基场景设置";
             this.tbp_SceneSet.UseVisualStyleBackColor = true;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(3, 507);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(35, 12);
+            this.label3.TabIndex = 28;
+            this.label3.Text = "纬 度";
+            // 
+            // textBox_latitude
+            // 
+            this.textBox_latitude.Location = new System.Drawing.Point(56, 504);
+            this.textBox_latitude.Name = "textBox_latitude";
+            this.textBox_latitude.Size = new System.Drawing.Size(79, 21);
+            this.textBox_latitude.TabIndex = 27;
+            this.textBox_latitude.TextChanged += new System.EventHandler(this.Text_jinduAndweiduChanged);
             // 
             // button_text_update
             // 
@@ -640,22 +659,14 @@
             this.tabControl1.TabIndex = 3;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.Feature_SelectedIndexChanged);
             // 
-            // textBox_latitude
+            // label4
             // 
-            this.textBox_latitude.Location = new System.Drawing.Point(56, 504);
-            this.textBox_latitude.Name = "textBox_latitude";
-            this.textBox_latitude.Size = new System.Drawing.Size(79, 21);
-            this.textBox_latitude.TabIndex = 27;
-            this.textBox_latitude.TextChanged += new System.EventHandler(this.Text_jinduAndweiduChanged);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(3, 507);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(35, 12);
-            this.label3.TabIndex = 28;
-            this.label3.Text = "纬 度";
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(607, 76);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(113, 12);
+            this.label4.TabIndex = 8;
+            this.label4.Text = "时域和空域特性分析";
             // 
             // Form1
             // 
@@ -749,6 +760,7 @@
         private System.Windows.Forms.RadioButton radioButton13;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox textBox_latitude;
+        private System.Windows.Forms.Label label4;
     }
 }
 
