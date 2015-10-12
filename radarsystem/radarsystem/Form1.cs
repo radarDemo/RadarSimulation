@@ -35,11 +35,15 @@ namespace radarsystem
         //List<PointD> list = new List<PointD>();
         //List<Point> list_trace = new List<Point>();
         ArrayList arr_tar=new ArrayList() ;  //目标ID数组
+
+        //场景标识
+        Scene scene;
    
         //存储添加噪音后的轨迹点
         List<PointD>[] guassianList = new List<PointD>[50];
         List<PointD>[] poissonList = new List<PointD>[50];
         List<PointD>[] uniformList = new List<PointD>[50];
+
 
         //数据库操作
         DBInterface dbInterface = new DBInterface();
