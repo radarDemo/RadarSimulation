@@ -25,16 +25,21 @@ namespace radarsystem
             public long time;
         };
         List<Point>[] list_trace = new List<Point>[50];
-        List<PointD>[] list = new List<PointD>[50];
+     //   List<PointD>[] list = new List<PointD>[50];
+
+
+        List<PointD>[] list_detect_distance = new List<PointD>[50];  //list数组 元素数据类型为PointD，最后用于存储判断了雷达扫描距离的 数据点，仅仅是为了
+        //计算精度要求，
+        List<PointD>[] list_detect_distance_final = new List<PointD>[50];   //最终用这个数组,用这个数组添加噪声，画波形图上噪音轨迹，以及特征分析
 
         //List<PointD> list = new List<PointD>();
         //List<Point> list_trace = new List<Point>();
         ArrayList arr_tar=new ArrayList() ;  //目标ID数组
    
         //存储添加噪音后的轨迹点
-        List<PointD> guassianList ;
-        List<PointD> poissonList;
-        List<PointD> uniformList;
+        List<PointD>[] guassianList = new List<PointD>[50];
+        List<PointD>[] poissonList = new List<PointD>[50];
+        List<PointD>[] uniformList = new List<PointD>[50];
 
         //数据库操作
         DBInterface dbInterface = new DBInterface();
@@ -45,11 +50,11 @@ namespace radarsystem
         Point screenpoint_pic4;
         private bool isDragging = false; //拖中
         private int currentX = 0, currentY = 0; //原来鼠标X,Y坐标
-        bool flag_thread2 = false;
+        //bool flag_thread2 = false;
         //bool flag_thread1 = false;
         bool flag_editchange = false;  //对应的配置文件文本框内容发生改变
         bool flag_init_editchange = false; //第一次加载时候，文本框内容会发生改变
-        Thread t2;
+        //Thread t2;
         //Thread t1;
      //用pictureBox4 的左上角坐标表示雷达的中心点坐标
    
@@ -98,7 +103,7 @@ namespace radarsystem
 
             DataSet ds = dbInterface.query(conStr, "select * from TargetTrailPoints", "目标轨迹");
 
-            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)//获取目标个数
             {
                 trace s1 = new trace();
                 s1.tar_ID = Convert.ToInt64(ds.Tables[0].Rows[i]["TGT_ID"]);
@@ -106,10 +111,15 @@ namespace radarsystem
                 if (!arr_tar.Contains(id))
                     arr_tar.Add(id);
             }
-            for (int i = 0; i < arr_tar.Count; i++)
+            for (int i = 0; i < arr_tar.Count; i++)//申请list和list_trace空间
             {
                 list_trace[i] = new List<Point>();
-                list[i] = new List<PointD>();
+                list_detect_distance[i] = new List<PointD>();
+                list_detect_distance_final[i] = new List<PointD>();
+
+                guassianList[i] = new List<PointD>();
+                poissonList[i] = new List<PointD>();
+                uniformList[i] = new List<PointD>();
             }
 
             for (int i = 0; i < ds.Tables[0].Rows.Count; i++)          //循环取出ds.table中的值
@@ -133,7 +143,7 @@ namespace radarsystem
                 p.X = Convert.ToDouble(ds.Tables[0].Rows[i]["X"]);
                 p.Y = Convert.ToDouble(ds.Tables[0].Rows[i]["Y"]);
                 index = arr_tar.IndexOf(tar_ID);
-                list[index].Add(p);
+                list_detect_distance[index].Add(p);
             }
             //for (int i = 0; i < ds.Tables[0].Rows.Count; i++)          //循环取出ds.table中的值
             //{
@@ -213,10 +223,7 @@ namespace radarsystem
         }
         private void draw_monitor_trace(List<PointD> points)
         {
-            System.Threading.Tasks.Parallel.For(0, arr_tar.Count, i =>
-                {
-                    thread2(points);
-                });
+            thread2(points);
             //if (!flag_thread2) 
             //{            
             //    t2 = new Thread(new ParameterizedThreadStart(thread2));
@@ -278,12 +285,12 @@ namespace radarsystem
                 g.DrawLine(p, one, two);
                 System.Threading.Thread.Sleep(200);
             }
-            double x1=116.41667;
-            double y1 =39.91667;   //beijing经纬度
-            double x2=114.31667;
-            double y2 = 30.51667;   //武汉经纬度
-            double dis=axMap1.Distance(x1,y1,x2,y2)*2;
-        //    textBox_longitude.Text = dis.ToString();
+        //    double x1=116.41667;
+        //    double y1 =39.91667;   //beijing经纬度
+        //    double x2=114.31667;
+        //    double y2 = 30.51667;   //武汉经纬度
+        //    double dis=axMap1.Distance(x1,y1,x2,y2)*2;
+        ////    textBox_longitude.Text = dis.ToString();
         }
          
         //
@@ -337,17 +344,17 @@ namespace radarsystem
             {
                 //当前选中了时域和空域特征分析(X)
                 if (noiseFlag == NoiseEnum.GUASSIAN){
-                    featDicX = feature.getTimeAndSpaceFeatureX(guassianList, 13);
-                    featDicY = feature.getTimeAndSpaceFeatureY(guassianList, 13);
+                    featDicX = feature.getTimeAndSpaceFeatureX(guassianList[0], 13);
+                    featDicY = feature.getTimeAndSpaceFeatureY(guassianList[0], 13);
                 } 
                 else if(noiseFlag == NoiseEnum.POISSON){
-                    featDicX = feature.getTimeAndSpaceFeatureX(poissonList, 13);
-                    featDicY = feature.getTimeAndSpaceFeatureY(uniformList, 13);
+                    featDicX = feature.getTimeAndSpaceFeatureX(poissonList[0], 13);
+                    featDicY = feature.getTimeAndSpaceFeatureY(uniformList[0], 13);
                 }
                    
                 else{
-                    featDicX = feature.getTimeAndSpaceFeatureX(uniformList, 13);
-                    featDicY = feature.getTimeAndSpaceFeatureY(uniformList, 13);
+                    featDicX = feature.getTimeAndSpaceFeatureX(uniformList[0], 13);
+                    featDicY = feature.getTimeAndSpaceFeatureY(uniformList[0], 13);
                 }
                    
                 String[] featName = new String[13];
@@ -540,26 +547,31 @@ namespace radarsystem
                 if (noiseFlag == NoiseEnum.GUASSIAN)
                 {
                     //显示添加高斯噪音的轨迹
-                    draw_monitor_trace(guassianList);
+                    System.Threading.Tasks.Parallel.For(0, arr_tar.Count, i =>
+                        {
+                            draw_monitor_trace(guassianList[i]);
+                        });
                 }
                 else if (noiseFlag == NoiseEnum.POISSON)
                 {
                     //显示添加泊松噪音的轨迹
-                    draw_monitor_trace(poissonList);
-
+                    System.Threading.Tasks.Parallel.For(0, arr_tar.Count, i =>
+                    {
+                        draw_monitor_trace(poissonList[i]);
+                    });
                 }
                 else if (noiseFlag == NoiseEnum.UNIFORM)
                 {
-                    draw_monitor_trace(uniformList);
+                    System.Threading.Tasks.Parallel.For(0, arr_tar.Count, i =>
+                    {
+                        draw_monitor_trace(uniformList[i]);
+                    });    
                 }
                 else
                 {
                     MessageBox.Show("未添加任何噪声，请先建模！");
                 }
-
-                
             }
-
                 //draw_monitor_trace();
             
         }
@@ -907,8 +919,47 @@ namespace radarsystem
             yVariance = Math.Pow(yVariance, 1 / 2);
         }
 
+        private void prepareforListDetectDis()      //准备数据，即填充list_detect_distance_final[] 数组
+        {
+            //    List<Point> list_trace = new List<Point>();
+            double distance1, distance2;
+            distance1 = 7 * panel1.Width / 20;          
+            PointD point = new PointD();
+            PointD point_diff = new PointD();      
+
+            for (int i = 0; i < arr_tar.Count; i++)
+            {
+                for (int j = 0; j < list_detect_distance[i].Count; j++)
+                {
+                    point.X = list_detect_distance[i][j].X;
+                    point.Y = list_detect_distance[i][j].Y;
+
+                    point_diff.X = point.X;
+                    point_diff.Y = point.Y;
+
+                    point_diff.X = point.X - pictureBox4.Left;
+                    point_diff.Y = point.Y - pictureBox4.Top;
+                    distance2 = Math.Sqrt(point_diff.X * point_diff.X + point_diff.Y * point_diff.Y);
+                    if (distance2 - distance1 <= 0)   //相当于判断雷达的最大扫描范围
+                    {
+                        // list_trace.
+                        PointD point_save = new PointD();
+                        point_save.X = point.X;
+                        point_save.Y = point.Y;
+                        list_detect_distance_final[i].Add(point_save);
+                        // continue;
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
+
+            }
+        }
         private void OnButtonModelDone(object sender, EventArgs e)
         {
+                prepareforListDetectDis();   //准备数据，为数组list_detect_distance_final
                 if (radioButton7.Checked == true)
                 {
                     //添加高斯噪声
@@ -918,8 +969,9 @@ namespace radarsystem
                     //计算均值和方差
                     for (int i = 0; i < arr_tar.Count; i++)
                     {
-                        computeMeanVar(list[i], out xMean, out xVariance, out yMean, out yVariance);
-                        guassianList = new List<PointD>(Noise.addGuassianNoise(list[i].ToArray(), xMean, xVariance, yMean, yVariance));
+                        computeMeanVar(list_detect_distance_final[i], out xMean, out xVariance, out yMean, out yVariance);
+                        guassianList[i] = new List<PointD>(Noise.addGuassianNoise(list_detect_distance_final[i].ToArray(), 
+                            xMean, xVariance, yMean, yVariance));
                     }
                     button_goback.Enabled = true;
                     if (DialogResult.OK == MessageBox.Show("congratulations! 添加噪声完毕，你选择添加了高斯白噪声"))
@@ -936,7 +988,8 @@ namespace radarsystem
                 {
                     //添加泊松噪音
                     for (int i = 0; i < arr_tar.Count; i++ )
-                        poissonList = new List<PointD>(Noise.addPoissonNoise(list[i].ToArray(), (panel1.Width / 10) * 7, (panel1.Width / 10) * 7));
+                        poissonList[i] = new List<PointD>(Noise.addPoissonNoise(list_detect_distance_final[i].ToArray(),
+                            (panel1.Width / 10) * 7, (panel1.Width / 10) * 7));
                     button_goback.Enabled = true;
                     if (DialogResult.OK == MessageBox.Show("congratulations! 添加噪声完毕，你选择添加了泊松噪声"))
                     {
@@ -959,13 +1012,13 @@ namespace radarsystem
                     double YA = 0, YB = 0;
                     for (int i = 0; i < arr_tar.Count; i++)
                     {
-                        computeMeanVar(list[i], out xMean, out xVariance, out yMean, out yVariance);
+                        computeMeanVar(list_detect_distance_final[i], out xMean, out xVariance, out yMean, out yVariance);
                         XA = xMean - Math.Pow(3, 1 / 2) * Math.Pow(xVariance, 2);
                         XB = xMean + Math.Pow(3, 1 / 2) * Math.Pow(xVariance, 2);
                         YA = yMean - Math.Pow(3, 1 / 2) * Math.Pow(yVariance, 2);
                         YB = yMean + Math.Pow(3, 1 / 2) * Math.Pow(yVariance, 2);
 
-                        uniformList = new List<PointD>(Noise.addUniformNoise(list[i].ToArray(), XA, XB, YA, YB));
+                        uniformList[i] = new List<PointD>(Noise.addUniformNoise(list_detect_distance_final[i].ToArray(), XA, XB, YA, YB));
                     }
                     button_goback.Enabled = true;
                     if (DialogResult.OK == MessageBox.Show("congratulations! 添加噪声完毕，你选择添加了平均噪声"))
@@ -989,7 +1042,7 @@ namespace radarsystem
                 //如果真是轨迹选项选中
                 System.Threading.Tasks.Parallel.For(0, arr_tar.Count, i =>
                 {
-                       draw_monitor_trace(list[i]);
+                    draw_monitor_trace(list_detect_distance_final[i]);
                 });
                 
             }
