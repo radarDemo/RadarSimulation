@@ -33,7 +33,10 @@ namespace radarsystem
             {
                 features[0] += p1[i].X;
             }
-            features[0] /= list.Count;
+            if (list.Count == 0)
+                features[0] = 0;
+            else
+                features[0] /= list.Count;
             //保留两位小数
             features[0] = Math.Round(features[0], 2);
             featDic.Add("算术平均值", features[0]);
@@ -46,7 +49,10 @@ namespace radarsystem
                     features[1] *= p1[i].X;
 
             }
-            features[1] = Math.Pow(features[1], 1 / list.Count);
+            if (list.Count == 0)
+                features[1] = 0;
+            else
+                features[1] = Math.Pow(features[1], 1 / list.Count);
             features[1] = Math.Round(features[1], 2);
             featDic.Add("几何平均值", features[1]);
 
@@ -56,7 +62,10 @@ namespace radarsystem
             {
                 features[2] += Math.Pow(p1[i].X, 2);
             }
-            features[2] /= list.Count;
+            if (list.Count == 0)
+                features[2] = 0;
+            else
+                features[2] /= list.Count;
             features[2] = Math.Pow(features[2], 1 / 2);
             features[2] = Math.Round(features[2], 2);
             featDic.Add("均方根值", features[2]);
@@ -66,7 +75,10 @@ namespace radarsystem
             {
                 features[3] += Math.Pow(p1[i].X - features[0], 2);
             }
-            features[3] /= list.Count - 1;
+            if (list.Count == 0)
+                features[3] = 0;
+            else
+                features[3] /= list.Count - 1;
             features[3] = Math.Round(features[3], 2);
             featDic.Add("方差", features[3]);
 
@@ -75,23 +87,35 @@ namespace radarsystem
             {
                 features[4] += Math.Pow(p1[i].X - features[0], 2);
             }
-            features[4] /= list.Count;
+            if (list.Count == 0)
+                features[4] = 0;
+            else
+                features[4] /= list.Count;
             features[4] = Math.Pow(features[4], 1 / 2);
             features[4] = Math.Round(features[4], 2);
             featDic.Add("标准差", features[4]);
 
             //波形指标,waveform indicators
-            features[5] = featDic["均方根值"] / Math.Abs(featDic["算术平均值"]);
+            if (list.Count == 0)
+                features[5] = 0;
+            else
+                features[5] = featDic["均方根值"] / Math.Abs(featDic["算术平均值"]);
             features[5] = Math.Round(features[5], 2);
             featDic.Add("波形指标", features[5]);
 
             //峰值指标,peak index
-            features[6] = pX.Max() / featDic["均方根值"];
+            if (list.Count == 0)
+                features[6] = 0;
+            else
+                features[6] = pX.Max() / featDic["均方根值"];
             features[6] = Math.Round(features[6], 2);
             featDic["峰值指标"] = features[6];
 
             //脉冲指标,pulse factor
-            features[7] = pX.Max() / Math.Abs(featDic["算术平均值"]);
+            if (list.Count == 0)
+                features[7] = 0;
+            else
+                features[7] = pX.Max() / Math.Abs(featDic["算术平均值"]);
             features[7] = Math.Round(features[7], 2);
             featDic["脉冲指标"] = features[7];
 
@@ -100,12 +124,18 @@ namespace radarsystem
             {
                 features[8] += Math.Pow(Math.Abs(p1[i].X), 1 / 2);
             }
-            features[8] = Math.Pow(features[8] / list.Count, 2);
+            if (list.Count == 0)
+                features[8] = 0;
+            else
+                features[8] = Math.Pow(features[8] / list.Count, 2);
             features[8] = Math.Round(features[8], 2);
             featDic["方根幅值"] = features[8];
 
             //裕度指标,margin indicator
-            features[9] = pX.Max() / featDic["方根幅值"];
+            if (list.Count == 0)
+                features[9] = 0;
+            else
+                features[9] = pX.Max() / featDic["方根幅值"];
             features[9] = Math.Round(features[9], 2);
             featDic["裕度指标"] = features[9];
 
@@ -114,8 +144,14 @@ namespace radarsystem
             {
                 features[10] += Math.Pow(p1[i].X, 4);
             }
-            features[10] /= list.Count;
-            features[10] = features[10] / Math.Pow(featDic["均方根值"], 4);
+            if (list.Count == 0)
+                features[10] = 0;
+            else
+            {
+                features[10] /= list.Count;
+                features[10] = features[10] / Math.Pow(featDic["均方根值"], 4);
+            }
+                
             features[10] = Math.Round(features[10], 2);
             featDic["峭度指标"] = features[10];
 
@@ -160,7 +196,13 @@ namespace radarsystem
             {
                 features[0] += p1[i].Y;
             }
-            features[0] /= list.Count;
+            if (list.Count == 0)
+                features[0] = 0;
+            else
+            {
+                features[0] /= list.Count;
+            }
+           
             //保留两位小数
             features[0] = Math.Round(features[0], 2);
             featDic.Add("算术平均值", features[0]);
@@ -173,7 +215,10 @@ namespace radarsystem
                     features[1] *= p1[i].Y;
 
             }
-            features[1] = Math.Pow(features[1], 1 / list.Count);
+            if (list.Count == 0)
+                features[1] = 0;
+            else
+                features[1] = Math.Pow(features[1], 1 / list.Count);
             features[1] = Math.Round(features[1], 2);
             featDic.Add("几何平均值", features[1]);
 
@@ -183,7 +228,10 @@ namespace radarsystem
             {
                 features[2] += Math.Pow(p1[i].Y, 2);
             }
-            features[2] /= list.Count;
+            if (list.Count == 0)
+                features[2] = 0;
+            else
+                features[2] /= list.Count;
             features[2] = Math.Pow(features[2], 1 / 2);
             features[2] = Math.Round(features[2], 2);
             featDic.Add("均方根值", features[2]);
@@ -193,7 +241,10 @@ namespace radarsystem
             {
                 features[3] += Math.Pow(p1[i].Y - features[0], 2);
             }
-            features[3] /= list.Count - 1;
+            if (list.Count <= 1)
+                features[3] = 0;
+            else
+                features[3] /= list.Count - 1;
             features[3] = Math.Round(features[3], 2);
             featDic.Add("方差", features[3]);
 
@@ -202,23 +253,35 @@ namespace radarsystem
             {
                 features[4] += Math.Pow(p1[i].Y - features[0], 2);
             }
-            features[4] /= list.Count;
+            if (list.Count == 0)
+                features[4] = 0;
+            else
+                features[4] /= list.Count;
             features[4] = Math.Pow(features[4], 1 / 2);
             features[4] = Math.Round(features[4], 2);
             featDic.Add("标准差", features[4]);
 
             //波形指标,waveform indicators
-            features[5] = featDic["均方根值"] / Math.Abs(featDic["算术平均值"]);
+            if (list.Count == 0)
+                features[5] = 0;
+            else
+                features[5] = featDic["均方根值"] / Math.Abs(featDic["算术平均值"]);
             features[5] = Math.Round(features[5], 2);
             featDic.Add("波形指标", features[5]);
 
             //峰值指标,peak index
-            features[6] = pY.Max() / featDic["均方根值"];
+            if (list.Count == 0)
+                features[6] = 0;
+            else
+                features[6] = pY.Max() / featDic["均方根值"];
             features[6] = Math.Round(features[6], 2);
             featDic["峰值指标"] = features[6];
 
             //脉冲指标,pulse factor
-            features[7] = pY.Max() / Math.Abs(featDic["算术平均值"]);
+            if (list.Count == 0)
+                features[7] = 0;
+            else
+                features[7] = pY.Max() / Math.Abs(featDic["算术平均值"]);
             features[7] = Math.Round(features[7], 2);
             featDic["脉冲指标"] = features[7];
 
@@ -227,12 +290,18 @@ namespace radarsystem
             {
                 features[8] += Math.Pow(Math.Abs(p1[i].Y), 1 / 2);
             }
-            features[8] = Math.Pow(features[8] / list.Count, 2);
+            if (list.Count == 0)
+                features[8] = 0;
+            else
+                features[8] = Math.Pow(features[8] / list.Count, 2);
             features[8] = Math.Round(features[8], 2);
             featDic["方根幅值"] = features[8];
 
             //裕度指标,margin indicator
-            features[9] = pY.Max() / featDic["方根幅值"];
+            if (list.Count == 0)
+                features[9] = 0;
+            else
+                features[9] = pY.Max() / featDic["方根幅值"];
             features[9] = Math.Round(features[9], 2);
             featDic["裕度指标"] = features[9];
 
@@ -241,8 +310,14 @@ namespace radarsystem
             {
                 features[10] += Math.Pow(p1[i].Y, 4);
             }
-            features[10] /= list.Count;
-            features[10] = features[10] / Math.Pow(featDic["均方根值"], 4);
+            if (list.Count == 0)
+                features[10] = 0;
+            else
+            {
+                features[10] /= list.Count;
+                features[10] = features[10] / Math.Pow(featDic["均方根值"], 4);
+            }
+                
             features[10] = Math.Round(features[10], 2);
             featDic["峭度指标"] = features[10];
 
