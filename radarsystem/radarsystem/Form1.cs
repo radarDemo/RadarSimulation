@@ -664,15 +664,14 @@ namespace radarsystem
                 //        {
                          //  draw_monitor_trace(guassianList[i]);
                       draw_monitor_trace();
-<<<<<<< HEAD
+
                       for (int i = 0; i < arr_tar.Count; i++)
                       {
                           if (guassianList[i].Count != 0)
                               if(this.featurecomboBox1.FindString(arr_tar[i].ToString()) == -1)  //去重
                                  this.featurecomboBox1.Items.Add(""+arr_tar[i]);
                       }
-=======
->>>>>>> origin/master
+
                  //       });
                 }
                 else if (noiseFlag == NoiseEnum.POISSON)
@@ -684,15 +683,14 @@ namespace radarsystem
 
                     //});
                     draw_monitor_trace();
-<<<<<<< HEAD
+
                     for (int i = 0; i < arr_tar.Count; i++)
                     {
                         if (poissonList[i].Count != 0)
                             if (this.featurecomboBox1.FindString(arr_tar[i].ToString()) == -1)
                                 this.featurecomboBox1.Items.Add("" + arr_tar[i]);
                     }
-=======
->>>>>>> origin/master
+
                 }
                 else if (noiseFlag == NoiseEnum.UNIFORM)
                 {
@@ -701,15 +699,14 @@ namespace radarsystem
                     //    //draw_monitor_trace(uniformList[i]);
                     //});    
                     draw_monitor_trace();
-<<<<<<< HEAD
+
                     for (int i = 0; i < arr_tar.Count; i++)
                     {
                         if (uniformList[i].Count != 0)
                             if (this.featurecomboBox1.FindString(arr_tar[i].ToString()) == -1)
                                 this.featurecomboBox1.Items.Add("" + arr_tar[i]);
                     }
-=======
->>>>>>> origin/master
+
                 }
                 else
                 {
@@ -790,14 +787,13 @@ namespace radarsystem
                 label_sel_radartype.Visible = true;
                 label_sel_radartype.Text = "多普勒雷达";
                 groupBox1.Visible = false;
-<<<<<<< HEAD
+
 
                 //设置当期场景为多普勒
                 scene = Scene.DOPPLER;
                 //清空combobox的值
                 this.featurecomboBox1.Items.Clear();
-=======
->>>>>>> origin/master
+
            
                 double MapX = 103, mapY = 36;  //精度 ，纬度
                 float screenX = 0, screenY = 0; //屏幕坐标
@@ -820,14 +816,13 @@ namespace radarsystem
                 label_sel_radartype.Visible = true;
                 label_sel_radartype.Text = "多基地雷达";
                 groupBox1.Visible = false;
-<<<<<<< HEAD
+
 
                 //设置当前场景为多基地
                 scene = Scene.MULTIBASE;
                 //清空combobox的值
                 this.featurecomboBox1.Items.Clear();
-=======
->>>>>>> origin/master
+
               //  drawtrace();
                 readTxt();
 
@@ -840,13 +835,12 @@ namespace radarsystem
                 label_sel_radartype.Visible = true;
                 label_sel_radartype.Text = "超视距雷达";
                 groupBox1.Visible = false;
-<<<<<<< HEAD
+
                 //设置当前场景为超视距雷达
                 scene = Scene.BVR;
                 //清空combobox的值
                 this.featurecomboBox1.Items.Clear();
-=======
->>>>>>> origin/master
+
                // drawtrace();
                 readTxt();
 
@@ -862,12 +856,11 @@ namespace radarsystem
                 label_sel_radartype.Visible = true;
                 label_sel_radartype.Text = "声呐主动";
                 groupBox1.Visible = false;
-<<<<<<< HEAD
+
                 scene = Scene.ACT_SONAR;
                 //清空combobox的值
                 this.featurecomboBox1.Items.Clear();
-=======
->>>>>>> origin/master
+
                // drawtrace();
             //    readTxt();
 
@@ -895,12 +888,11 @@ namespace radarsystem
                 label_sel_radartype.Visible = true;
                 label_sel_radartype.Text = "指挥控制";
                 groupBox1.Visible = false;
-<<<<<<< HEAD
+
                 scene = Scene.COMMAND;
                 //清空combobox的值
                 this.featurecomboBox1.Items.Clear();
-=======
->>>>>>> origin/master
+
               //  drawtrace();
            //     readTxt();
 
@@ -1177,12 +1169,12 @@ namespace radarsystem
                         xMean, xVariance, yMean, yVariance));
                     for (int j = 0; j < guassianList[i].Count; j++)
                     {
-<<<<<<< HEAD
+
                         computeMeanVar(list_detect_distance_final[i], out xMean, out xVariance, out yMean, out yVariance);
                         guassianList[i] = new List<PointD>(Noise.addGuassianNoise(list_detect_distance_final[i].ToArray(), 
                             xMean, xVariance, yMean, yVariance));
 
-=======
+
                         point.X = guassianList[i][j].X;
                         point.Y = guassianList[i][j].Y;
 
@@ -1205,7 +1197,7 @@ namespace radarsystem
                         {
                             continue;
                         }
->>>>>>> origin/master
+
                     }
                 }
                 button_goback.Enabled = true;
