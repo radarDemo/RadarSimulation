@@ -178,8 +178,8 @@ namespace radarsystem
             //    Console.WriteLine(p.Y);
             //}
             //动态生成combobox的内容
-            for (int i = 0; i < arr_tar.Count;i++ )
-                this.featurecomboBox1.Items.Add(arr_tar[i].ToString());
+           // for (int i = 0; i < arr_tar.Count;i++ )
+               // this.featurecomboBox1.Items.Add(arr_tar[i].ToString());
 
             screenpoint_pic4 =PointToScreen(pictureBox4.Location);
 
@@ -628,6 +628,11 @@ namespace radarsystem
                 //        {
                          //  draw_monitor_trace(guassianList[i]);
                       draw_monitor_trace();
+                      for (int i = 0; i < arr_tar.Count; i++)
+                      {
+                          if (guassianList[i].Count != 0)
+                              this.featurecomboBox1.Items.Add(""+arr_tar[i]);
+                      }
                  //       });
                 }
                 else if (noiseFlag == NoiseEnum.POISSON)
@@ -639,6 +644,11 @@ namespace radarsystem
 
                     //});
                     draw_monitor_trace();
+                    for (int i = 0; i < arr_tar.Count; i++)
+                    {
+                        if (poissonList[i].Count != 0)
+                            this.featurecomboBox1.Items.Add("" + arr_tar[i]);
+                    }
                 }
                 else if (noiseFlag == NoiseEnum.UNIFORM)
                 {
@@ -647,6 +657,11 @@ namespace radarsystem
                     //    //draw_monitor_trace(uniformList[i]);
                     //});    
                     draw_monitor_trace();
+                    for (int i = 0; i < arr_tar.Count; i++)
+                    {
+                        if (uniformList[i].Count != 0)
+                            this.featurecomboBox1.Items.Add("" + arr_tar[i]);
+                    }
                 }
                 else
                 {
