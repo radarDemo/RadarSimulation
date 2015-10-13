@@ -36,6 +36,9 @@ namespace radarsystem
         //List<Point> list_trace = new List<Point>();
         ArrayList arr_tar=new ArrayList() ;  //目标ID数组
         Color[] colour = new Color[50];//轨迹颜色数组
+
+        //记录当前是哪个场景
+        Scene scene;
    
         //存储添加噪音后的轨迹点
         List<PointD>[] guassianList = new List<PointD>[50];
@@ -174,7 +177,12 @@ namespace radarsystem
              
             //    Console.WriteLine(p.Y);
             //}
+            //动态生成combobox的内容
+            for (int i = 0; i < arr_tar.Count;i++ )
+                this.featurecomboBox1.Items.Add(arr_tar[i].ToString());
+
             screenpoint_pic4 =PointToScreen(pictureBox4.Location);
+
             Console.WriteLine(screenpoint_pic4.X);
             Console.WriteLine(screenpoint_pic4.Y);
            
@@ -438,129 +446,92 @@ namespace radarsystem
         private void featurecomboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             
-            int showIndex = featurecomboBox1.SelectedIndex;
+           
+            string selectedText = featurecomboBox1.SelectedItem.ToString();
+            long selectedID = Convert.ToInt64(selectedText);
+            //根据选中的ID，显示时域，空域，频域特性
+            int index = arr_tar.IndexOf(selectedID);
+
             FeatureModel feature = new FeatureModel();
             Dictionary<String, double> featDicX;
             Dictionary<String, double> featDicY; 
 
             if (noiseFlag == NoiseEnum.NoNoise)
                 return;
-            if (showIndex == 0)
+       
+            if (noiseFlag == NoiseEnum.GUASSIAN){
+                featDicX = feature.getTimeAndSpaceFeatureX(guassianList[index], 13);
+                featDicY = feature.getTimeAndSpaceFeatureY(guassianList[index], 13);
+            } 
+            else if(noiseFlag == NoiseEnum.POISSON){
+                featDicX = feature.getTimeAndSpaceFeatureX(poissonList[index], 13);
+                featDicY = feature.getTimeAndSpaceFeatureY(poissonList[index], 13);
+            }
+                   
+            else{
+                featDicX = feature.getTimeAndSpaceFeatureX(uniformList[index], 13);
+                featDicY = feature.getTimeAndSpaceFeatureY(uniformList[index], 13);
+            }
+                   
+            String[] featName = new String[13];
+            int i = 0;
+            foreach (String key in featDicX.Keys)
             {
-                //当前选中了时域和空域特征分析(X)
-                if (noiseFlag == NoiseEnum.GUASSIAN){
-                    featDicX = feature.getTimeAndSpaceFeatureX(guassianList[0], 13);
-                    featDicY = feature.getTimeAndSpaceFeatureY(guassianList[0], 13);
-                } 
-                else if(noiseFlag == NoiseEnum.POISSON){
-                    featDicX = feature.getTimeAndSpaceFeatureX(poissonList[0], 13);
-                    featDicY = feature.getTimeAndSpaceFeatureY(uniformList[0], 13);
-                }
-                   
-                else{
-                    featDicX = feature.getTimeAndSpaceFeatureX(uniformList[0], 13);
-                    featDicY = feature.getTimeAndSpaceFeatureY(uniformList[0], 13);
-                }
-                   
-                String[] featName = new String[13];
-                int i = 0;
-                foreach (String key in featDicX.Keys)
-                {
-                    featName[i++] = key;
-                }
+                featName[i++] = key;
+            }
 
-                featurelistView.BeginUpdate();
+            featurelistView.BeginUpdate();
                 
                 
-                featurelistView.Clear();
-                ColumnHeader header1 = new ColumnHeader();
-                header1.Text = " ";
-                header1.Width = 85;
-                ColumnHeader header2 = new ColumnHeader();
-                header2.Text = "X";
-                header2.Width = 90;
-                ColumnHeader header3 = new ColumnHeader();
-                header3.Text = "Y";
-                header3.Width = 90;
+            featurelistView.Clear();
+            ColumnHeader header1 = new ColumnHeader();
+            header1.Text = " ";
+            header1.Width = 85;
+            ColumnHeader header2 = new ColumnHeader();
+            header2.Text = "X";
+            header2.Width = 90;
+            ColumnHeader header3 = new ColumnHeader();
+            header3.Text = "Y";
+            header3.Width = 90;
 
-                featurelistView.Columns.AddRange(new ColumnHeader[] { header1, header2, header3 });
-                featurelistView.FullRowSelect = true;
-                //listview 中添加数据
-                //featurelistView.Items.Add(" ");
-                featurelistView.Items.Add("算法");
+            featurelistView.Columns.AddRange(new ColumnHeader[] { header1, header2, header3 });
+            featurelistView.FullRowSelect = true;
+            //listview 中添加数据
+            //featurelistView.Items.Add(" ");
+            featurelistView.Items.Add("算法");
                
-                //listItem.SubItems.Add("数值分析");
-                featurelistView.Items[0].SubItems.Add("数值分析");
-                featurelistView.Items[0].SubItems.Add("数值分析");
-                ListViewItem listItem = new ListViewItem();
-                for (i = 0; i < 13; i++)
-                {
-                    featurelistView.Items.Add("" + featName[i]);
-                    //ListViewItem listItem = new ListViewItem();
-                    //listItem.SubItems.Add(""+featDic[featName[i]]);
-                    featurelistView.Items[i+1].SubItems.Add("" + featDicX[featName[i]]);
-                    featurelistView.Items[i + 1].SubItems.Add("" + featDicY[featName[i]]);
-
-                }
-
-                featurelistView.View = System.Windows.Forms.View.Details;
-                featurelistView.GridLines = true;
-                featurelistView.EndUpdate();
-
-
-            }
-            else if (showIndex == 1)
+            //listItem.SubItems.Add("数值分析");
+            featurelistView.Items[0].SubItems.Add("数值分析");
+            featurelistView.Items[0].SubItems.Add("数值分析");
+            ListViewItem listItem = new ListViewItem();
+            for (i = 0; i < 13; i++)
             {
-                //当前选中了时域和空域特征分析(Y)
-            /*    if (noiseFlag == NoiseEnum.GUASSIAN)
-                    featDic = feature.getTimeAndSpaceFeatureY(guassianList, 13);
-                else if (noiseFlag == NoiseEnum.POISSON)
-                    featDic = feature.getTimeAndSpaceFeatureY(poissonList, 13);
-                else
-                    featDic = feature.getTimeAndSpaceFeatureY(uniformList, 13);
-                String[] featName = new String[13];
-                int i = 0;
-                foreach (String key in featDic.Keys)
-                {
-                    featName[i++] = key;
-                }
-
-                featurelistView.BeginUpdate();
-
-
-                featurelistView.Clear();
-                ColumnHeader header1 = new ColumnHeader();
-                header1.Text = "算法";
-                header1.Width = 95;
-                ColumnHeader header2 = new ColumnHeader();
-                header2.Text = "数值分析";
-                header2.Width = 100;
-
-                featurelistView.Columns.AddRange(new ColumnHeader[] { header1, header2 });
-                featurelistView.FullRowSelect = true;
-                //listview 中添加数据
-
-                for (i = 0; i < 13; i++)
-                {
-                    featurelistView.Items.Add("" + featName[i]);
-                    ListViewItem listItem = new ListViewItem();
-                    listItem.SubItems.Add("" + featDic[featName[i]]);
-                    featurelistView.Items[i].SubItems.Add("" + featDic[featName[i]]);
-
-
-                }
-
-                featurelistView.View = System.Windows.Forms.View.Details;
-                featurelistView.GridLines = true;
-                featurelistView.EndUpdate();
-             */
+                featurelistView.Items.Add("" + featName[i]);
+                //ListViewItem listItem = new ListViewItem();
+                //listItem.SubItems.Add(""+featDic[featName[i]]);
+                featurelistView.Items[i+1].SubItems.Add("" + featDicX[featName[i]]);
+                featurelistView.Items[i + 1].SubItems.Add("" + featDicY[featName[i]]);
 
             }
-            else if(showIndex == 2)
+
+            if (scene == Scene.ACT_SONAR)
             {
-                //当前选中了频域特征分析
-               MessageBox.Show("频域特征分析未实现", "hints");
+                featurelistView.Items.Add("探测距离");
+                featurelistView.Items[++i].SubItems.Add("<40km");
+                featurelistView.Items[i].SubItems.Add("<40km");
+                featurelistView.Items.Add("方位");
+                featurelistView.Items[++i].SubItems.Add("0~2*pi");
+                featurelistView.Items[i].SubItems.Add("0~2*pi");
             }
+            else if (scene == Scene.PAS_SONAR || scene == Scene.ELEC_VS)
+            {
+                featurelistView.Items.Add("方位");
+                featurelistView.Items[++i].SubItems.Add("0~2*pi");
+                featurelistView.Items[i].SubItems.Add("0~2*pi");
+            }
+            featurelistView.View = System.Windows.Forms.View.Details;
+            featurelistView.GridLines = true;
+            featurelistView.EndUpdate();
         }
 
         //画特性分析中间面板的坐标和圆
@@ -756,6 +727,9 @@ namespace radarsystem
                 label_sel_radartype.Visible = true;
                 label_sel_radartype.Text = "多普勒雷达";
                 groupBox1.Visible = false;
+
+                //设置当期场景为多普勒
+                scene = Scene.DOPPLER;
            
                 double MapX = 103, mapY = 36;  //精度 ，纬度
                 float screenX = 0, screenY = 0; //屏幕坐标
@@ -778,6 +752,9 @@ namespace radarsystem
                 label_sel_radartype.Visible = true;
                 label_sel_radartype.Text = "多基地雷达";
                 groupBox1.Visible = false;
+
+                //设置当前场景为多基地
+                scene = Scene.MULTIBASE;
               //  drawtrace();
                 readTxt();
 
@@ -790,6 +767,8 @@ namespace radarsystem
                 label_sel_radartype.Visible = true;
                 label_sel_radartype.Text = "超视距雷达";
                 groupBox1.Visible = false;
+                //设置当前场景为超视距雷达
+                scene = Scene.BVR;
                // drawtrace();
                 readTxt();
 
@@ -805,6 +784,7 @@ namespace radarsystem
                 label_sel_radartype.Visible = true;
                 label_sel_radartype.Text = "声呐主动";
                 groupBox1.Visible = false;
+                scene = Scene.ACT_SONAR;
                // drawtrace();
             //    readTxt();
 
@@ -816,6 +796,7 @@ namespace radarsystem
                 buttonDectecModeling.Visible = true;
                 label_sel_radartype.Visible = true;
                 label_sel_radartype.Text = "电子对抗";
+                scene = Scene.ELEC_VS;
                 groupBox1.Visible = false;
                // drawtrace();
             //    readTxt();
@@ -830,6 +811,7 @@ namespace radarsystem
                 label_sel_radartype.Visible = true;
                 label_sel_radartype.Text = "指挥控制";
                 groupBox1.Visible = false;
+                scene = Scene.COMMAND;
               //  drawtrace();
            //     readTxt();
 

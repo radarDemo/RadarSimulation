@@ -17,6 +17,16 @@ namespace radarsystem
             //计算时域空域特征分析
             double[] features = new double[count];
 
+            //如果list中没有数据
+            if(list.Count == 0)
+            {
+                featDic["算术平均值"] = 0; featDic["几何平均值"] = 0; featDic["均方根值"] = 0; featDic["方差"] = 0;
+                featDic["标准差"] = 0; featDic["波形指标"] = 0; featDic["峰值指标"] = 0; featDic["脉冲指标"] = 0;
+                featDic["方根幅值"] = 0; featDic["裕度指标"] = 0; featDic["峭度指标"] = 0; featDic["自相关函数"] = 0;
+                featDic["互相关函数"] = 0;
+                return featDic;
+            }
+
             PointD[] p1 = new PointD[list.Count];
             for (int i = 0; i < list.Count; i++)
             {
@@ -143,6 +153,16 @@ namespace radarsystem
             Dictionary<String, double> featDic = new Dictionary<String, double>();
             //计算时域空域特征分析
             double[] features = new double[count];
+
+            //如果list中没有数据
+            if (list.Count == 0)
+            {
+                featDic["算术平均值"] = 0; featDic["几何平均值"] = 0; featDic["均方根值"] = 0; featDic["方差"] = 0;
+                featDic["标准差"] = 0; featDic["波形指标"] = 0; featDic["峰值指标"] = 0; featDic["脉冲指标"] = 0;
+                featDic["方根幅值"] = 0; featDic["裕度指标"] = 0; featDic["峭度指标"] = 0; featDic["自相关函数"] = 0;
+                featDic["互相关函数"] = 0;
+                return featDic;
+            }
 
             PointD[] p1 = new PointD[list.Count];
             for (int i = 0; i < list.Count; i++)
