@@ -631,7 +631,8 @@ namespace radarsystem
                       for (int i = 0; i < arr_tar.Count; i++)
                       {
                           if (guassianList[i].Count != 0)
-                              this.featurecomboBox1.Items.Add(""+arr_tar[i]);
+                              if(this.featurecomboBox1.FindString(arr_tar[i].ToString()) == -1)  //去重
+                                 this.featurecomboBox1.Items.Add(""+arr_tar[i]);
                       }
                  //       });
                 }
@@ -647,7 +648,8 @@ namespace radarsystem
                     for (int i = 0; i < arr_tar.Count; i++)
                     {
                         if (poissonList[i].Count != 0)
-                            this.featurecomboBox1.Items.Add("" + arr_tar[i]);
+                            if (this.featurecomboBox1.FindString(arr_tar[i].ToString()) == -1)
+                                this.featurecomboBox1.Items.Add("" + arr_tar[i]);
                     }
                 }
                 else if (noiseFlag == NoiseEnum.UNIFORM)
@@ -660,7 +662,8 @@ namespace radarsystem
                     for (int i = 0; i < arr_tar.Count; i++)
                     {
                         if (uniformList[i].Count != 0)
-                            this.featurecomboBox1.Items.Add("" + arr_tar[i]);
+                            if (this.featurecomboBox1.FindString(arr_tar[i].ToString()) == -1)
+                                this.featurecomboBox1.Items.Add("" + arr_tar[i]);
                     }
                 }
                 else
@@ -716,7 +719,7 @@ namespace radarsystem
         }
         private void radioButton1_CheckedChanged(object sender, EventArgs e)  //第一组groupbox1中的radiobutton,都对应了这个事件
         {
-            clearforListDetectDis();  //清空list_detect_distance_final 数组
+              clearforListDetectDis();  //清空list_detect_distance_final 数组
             if (radioButton1.Checked == true || radioButton2.Checked == true || radioButton3.Checked == true)
             {
 
@@ -745,6 +748,8 @@ namespace radarsystem
 
                 //设置当期场景为多普勒
                 scene = Scene.DOPPLER;
+                //清空combobox的值
+                this.featurecomboBox1.Items.Clear();
            
                 double MapX = 103, mapY = 36;  //精度 ，纬度
                 float screenX = 0, screenY = 0; //屏幕坐标
@@ -770,6 +775,8 @@ namespace radarsystem
 
                 //设置当前场景为多基地
                 scene = Scene.MULTIBASE;
+                //清空combobox的值
+                this.featurecomboBox1.Items.Clear();
               //  drawtrace();
                 readTxt();
 
@@ -784,6 +791,8 @@ namespace radarsystem
                 groupBox1.Visible = false;
                 //设置当前场景为超视距雷达
                 scene = Scene.BVR;
+                //清空combobox的值
+                this.featurecomboBox1.Items.Clear();
                // drawtrace();
                 readTxt();
 
@@ -800,6 +809,8 @@ namespace radarsystem
                 label_sel_radartype.Text = "声呐主动";
                 groupBox1.Visible = false;
                 scene = Scene.ACT_SONAR;
+                //清空combobox的值
+                this.featurecomboBox1.Items.Clear();
                // drawtrace();
             //    readTxt();
 
@@ -813,6 +824,8 @@ namespace radarsystem
                 label_sel_radartype.Text = "电子对抗";
                 scene = Scene.ELEC_VS;
                 groupBox1.Visible = false;
+                //清空combobox的值
+                this.featurecomboBox1.Items.Clear();
                // drawtrace();
             //    readTxt();
 
@@ -827,6 +840,8 @@ namespace radarsystem
                 label_sel_radartype.Text = "指挥控制";
                 groupBox1.Visible = false;
                 scene = Scene.COMMAND;
+                //清空combobox的值
+                this.featurecomboBox1.Items.Clear();
               //  drawtrace();
            //     readTxt();
 
@@ -838,6 +853,11 @@ namespace radarsystem
                 label_sel_radartype.Visible = true;
                 label_sel_radartype.Text = "声呐被动";
                 groupBox1.Visible = false;
+
+                //场景
+                scene = Scene.PAS_SONAR;
+                //清空combobox的值
+                this.featurecomboBox1.Items.Clear();
                 // drawtrace();
              //   readTxt();
 
@@ -1001,7 +1021,7 @@ namespace radarsystem
                 groupBox3.Visible = true;
                 buttonModelDone.Visible = true;
                 button_goback.Visible = true;
-                button_goback.Enabled = false;
+                button_goback.Enabled = true;
                 radioButton7.Checked = false;     //清除单选按钮选中状态
                 radioButton8.Checked = false;
                 radioButton9.Checked = false;
@@ -1073,6 +1093,8 @@ namespace radarsystem
             for (int k = 0; k < 4; k++)
                 Console.WriteLine(list_detect_distance_final[k].Count);
         }
+
+        //添加噪音
         private void OnButtonModelDone(object sender, EventArgs e)
         {
             
@@ -1090,6 +1112,7 @@ namespace radarsystem
                         computeMeanVar(list_detect_distance_final[i], out xMean, out xVariance, out yMean, out yVariance);
                         guassianList[i] = new List<PointD>(Noise.addGuassianNoise(list_detect_distance_final[i].ToArray(), 
                             xMean, xVariance, yMean, yVariance));
+
                     }
                     button_goback.Enabled = true;
                     if (DialogResult.OK == MessageBox.Show("congratulations! 添加噪声完毕，你选择添加了高斯白噪声"))
