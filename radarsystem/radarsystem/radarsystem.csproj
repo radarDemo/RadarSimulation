@@ -104,7 +104,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\duopule.jpg" />
-    <Content Include="Resources\duopule.png" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="AxMapXLib">
@@ -133,6 +132,11 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\HVR.jpg" />
+    <Content Include="Resources\radarpic.gif" />
+    <Content Include="Resources\SONAR.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

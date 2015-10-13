@@ -203,10 +203,10 @@
             // 
             this.featurecomboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.featurecomboBox1.FormattingEnabled = true;
-            /*this.featurecomboBox1.Items.AddRange(new object[] {
+            this.featurecomboBox1.Items.AddRange(new object[] {
             "时域和空域的特征分析(X)",
             "时域和空域的特征分析(Y)",
-            "频域特征分析"});*/
+            "频域特征分析"});
             this.featurecomboBox1.Location = new System.Drawing.Point(607, 38);
             this.featurecomboBox1.Name = "featurecomboBox1";
             this.featurecomboBox1.Size = new System.Drawing.Size(167, 20);

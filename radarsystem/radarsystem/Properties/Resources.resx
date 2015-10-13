@@ -124,6 +124,9 @@
   <data name="header" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\header.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="HVR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\hvr.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="pictureBox" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -3829,5 +3832,8 @@
         ZXX4stMQuF2vAGf70/XX/jhabyMedAcl33/o9LcjcPsDRAKEmwW1uQGMW7jkX3d4uCPm+JNAyEc+wcMJ
         1j1eLwA8GMF4cJ+HHsAglz/innOeg34P2ZO07ogAAECgIO2nDGC7IwHw3vsggQAAOw==
 </value>
+  </data>
+  <data name="SONAR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\sonar.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
